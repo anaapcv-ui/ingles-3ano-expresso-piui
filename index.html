@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expresso Piuí — Revisão de Inglês 3º ano (Units 7 e 8)</title>
+<style>
+:root{
+--loco:#D64045; --loco2:#a52b30; --ceu:#3A86FF; --ceu2:#245fc0; --trilho:#FFB703; --trilho2:#c68a00;
+--campo:#2A9D8F; --campo2:#1d7369; --fundo:#FFF9F0; --tinta:#2b2a33; --cinza:#86828c; --linha:#f0dcc8;
+--ok:#1fa45b; --erro:#e0453a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;background:var(--fundo);color:var(--tinta);font-size:19px;line-height:1.55}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.trilhos{height:18px;background:repeating-linear-gradient(90deg,#8b5a2b 0 8px,transparent 8px 26px),linear-gradient(180deg,transparent 0 3px,#777 3px 6px,transparent 6px 12px,#777 12px 15px,transparent 15px);background-color:#f6e6cf}
+header.topo{background:linear-gradient(180deg,#dcebff,#fff9f0);text-align:center;padding:14px 12px 10px;overflow:hidden}
+header.topo h1{margin:4px 0;font-size:1.8em;color:var(--loco2);letter-spacing:.5px}
+header.topo p{margin:2px 0;color:#5f5b66;font-size:.92em}
+.trem{font-size:2.1em;display:inline-block;animation:anda 6s linear infinite;white-space:nowrap}
+@keyframes anda{0%{transform:translateX(-30px)}50%{transform:translateX(30px)}100%{transform:translateX(-30px)}}
+nav.abas{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 8px #0001;display:flex;gap:6px;overflow-x:auto;padding:8px}
+nav.abas button{flex:0 0 auto;border:2px solid var(--linha);background:#fff;border-radius:14px;padding:8px 12px;font-weight:bold;color:var(--tinta);position:relative}
+nav.abas button.ativa{background:var(--ceu);border-color:var(--ceu2);color:#fff}
+nav.abas button.trancada{background:#eee;color:#999;border-color:#ddd}
+nav.abas button .selo{position:absolute;top:-8px;right:-6px;background:var(--trilho);color:#4a3200;border-radius:10px;font-size:.62em;padding:1px 6px}
+main{max-width:880px;margin:0 auto;padding:14px 12px 80px}
+section.aba{display:none}
+section.aba.ativa{display:block;animation:entra .35s ease}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:#fff;border-radius:18px;padding:16px 18px;margin:14px 0;box-shadow:0 3px 0 var(--linha),0 4px 14px #0000000d;border:2px solid var(--linha)}
+h2{color:var(--ceu2);margin:.2em 0 .4em}
+h3{margin:.5em 0 .3em;color:var(--loco2)}
+.sub{color:var(--cinza);font-size:.88em}
+.btn{border:none;border-radius:14px;padding:10px 16px;font-weight:bold;color:#fff;background:var(--campo);box-shadow:0 3px 0 var(--campo2);margin:4px 2px}
+.btn:disabled{background:#c9c4cc;box-shadow:0 3px 0 #a9a3ad;cursor:not-allowed}
+.btn.azul{background:var(--ceu);box-shadow:0 3px 0 var(--ceu2)}
+.btn.loco{background:var(--loco);box-shadow:0 3px 0 var(--loco2)}
+.btn.amarelo{background:var(--trilho);box-shadow:0 3px 0 var(--trilho2);color:#3d2a00}
+.btn.claro{background:#fff;color:var(--tinta);border:2px solid var(--linha);box-shadow:none}
+.trilha{display:grid;gap:10px}
+.etapa{display:flex;gap:12px;align-items:center;border-radius:16px;padding:12px 14px;border:2px solid var(--linha);background:#fff;text-align:left;width:100%;color:var(--tinta)}
+.etapa .ic{font-size:1.8em}
+.etapa.trancada{background:#f1f0f2;color:#8d8892;filter:grayscale(1)}
+.etapa.feita{border-color:var(--ok)}
+.etapa.nova{animation:brilho 1.4s ease 3;border-color:var(--trilho)}
+@keyframes brilho{0%,100%{box-shadow:0 0 0 0 #ffb70300}50%{box-shadow:0 0 0 8px #ffb70388}}
+.tag{display:inline-block;border-radius:10px;padding:1px 8px;font-size:.75em;font-weight:bold;margin-left:4px}
+.tag.ok{background:#dff5e8;color:var(--ok)}
+.tag.novo{background:#fff1c2;color:#7a5600}
+.tag.lock{background:#e7e5ea;color:#6b6670}
+.barra{height:14px;background:#eee;border-radius:10px;overflow:hidden;margin:6px 0}
+.barra>div{height:100%;background:linear-gradient(90deg,var(--loco),var(--trilho));width:0;transition:width .4s}
+.bloco{border-left:10px solid var(--c,var(--ceu))}
+.bloco.fechado .corpo{display:none}
+.bloco .cab{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer}
+.bloco.trancado{opacity:.55}
+.bilhete{display:inline-block;background:#fff4c9;border:2px dashed var(--trilho2);border-radius:8px;padding:0 8px;font-size:.75em;font-weight:bold;color:#7a5600;transform:rotate(-4deg)}
+.caixa{background:#fff8e3;border:2px dashed var(--trilho);border-radius:12px;padding:8px 12px;margin:10px 0;font-size:.93em}
+.erro-prova{background:#fdecea;border:2px solid #f3b8b3;border-radius:12px;padding:8px 12px;margin:10px 0;font-size:.93em}
+.como{background:#eaf7f5;border:2px solid #9fd8cf;border-radius:12px;padding:8px 12px;margin:10px 0;font-size:.93em}
+.como ol{margin:4px 0 0;padding-left:22px}
+.regra{background:#eef9f3;border:2px solid #bfe9d2;border-radius:12px;padding:8px 12px;margin:8px 0}
+.regra.azulado{background:#eef5fc;border-color:#c8def3}
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px}
+.narrador{background:#eef4ff;border-left:5px solid var(--ceu);border-radius:10px;padding:8px 12px;margin:8px 0;font-style:italic}
+.pergunta{margin:14px 0 6px;padding-top:10px;border-top:2px dotted var(--linha)}
+.opcoes{display:grid;gap:6px}
+.op{text-align:left;border:2px solid var(--linha);background:#fff;border-radius:12px;padding:8px 12px;color:var(--tinta)}
+.op:hover:not(:disabled){border-color:var(--ceu)}
+.op.certa{background:#e3f7ea;border-color:var(--ok);font-weight:bold}
+.op.errada{background:#fde6e4;border-color:var(--erro)}
+.op.sel{background:#e6efff;border-color:var(--ceu);font-weight:bold}
+.op:disabled{cursor:default}
+.fb{border-radius:12px;padding:8px 12px;margin-top:6px;font-size:.93em;animation:entra .3s}
+.fb.ok{background:#e3f7ea}
+.fb.no{background:#fff0e0}
+table.mini{border-collapse:collapse;margin:6px 0;font-size:.92em;width:100%}
+table.mini td,table.mini th{border:2px solid #ead9bd;padding:4px 8px;text-align:left}
+table.mini th{background:#fbefd9}
+/* mapa */
+.mapa .centro{background:var(--loco);color:#fff;text-align:center;border-radius:50px;padding:14px;font-weight:bold;font-size:1.15em;margin:6px auto 14px;max-width:460px;box-shadow:0 4px 0 var(--loco2)}
+.ramos{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.ramo{border-radius:16px;padding:10px 12px;background:#fff;border:3px solid var(--c);transition:filter .6s}
+.ramo h4{margin:0 0 6px;color:var(--c);font-size:1.05em}
+.mapa.incompleto .ramo{filter:saturate(.25)}
+.mapa.completo .ramo{animation:revela .8s ease}
+@keyframes revela{from{transform:scale(.96)}to{transform:none}}
+.no{margin:7px 0;font-size:.96em}
+.lacuna{display:inline-flex;gap:4px;vertical-align:middle;flex-wrap:wrap}
+.lacuna button{border:2px dashed var(--ceu);background:#eef4ff;border-radius:10px;padding:2px 10px;font-weight:bold;color:var(--ceu2)}
+.lacuna.feita span{display:inline-block;background:#e3f7ea;border:2px solid var(--ok);border-radius:10px;padding:2px 10px;font-weight:bold;color:var(--ok)}
+.lacuna button.erro{border-color:var(--erro);background:#fde6e4;color:var(--erro);animation:balanca .45s}
+@keyframes balanca{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.contador{position:sticky;top:58px;z-index:5;background:var(--ceu);color:#fff;border-radius:14px;padding:8px 12px;text-align:center;font-weight:bold;margin:8px 0}
+/* vf */
+.vf-frase{font-size:1.2em;font-weight:bold;text-align:center;margin:14px 0;min-height:3em}
+.vf-bts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.vf-bts .btn{font-size:1.1em;padding:12px 22px}
+.sinal{font-size:2.4em;text-align:center}
+/* resumo */
+.linha-tempo{display:grid;gap:8px;position:relative;padding-left:22px}
+.linha-tempo:before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:6px;border-radius:4px;background:repeating-linear-gradient(180deg,var(--loco) 0 12px,var(--trilho) 12px 24px)}
+.parada{display:flex;gap:10px;align-items:center;background:#fff;border:2px solid var(--linha);border-radius:14px;padding:6px 10px;flex-wrap:wrap}
+.parada .dia{font-weight:bold;color:var(--loco2);min-width:130px}
+.parada .ic{font-size:1.4em}
+.postits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.postit{background:#fff59a;padding:12px;border-radius:4px;box-shadow:2px 3px 6px #0002;transform:rotate(-1deg);font-size:.95em}
+.postit:nth-child(even){transform:rotate(1.2deg);background:#ffe0ef}
+.relampago button{width:100%;text-align:left}
+.resp-oculta{display:none;margin:4px 0 8px 10px;color:var(--campo2);font-weight:bold}
+/* tiles */
+.tiles{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tile{width:42px;height:46px;border-radius:10px;border:2px solid var(--trilho2);background:#fff4c9;font-weight:bold;font-size:1.1em;color:#5a3d00}
+.tile:disabled{opacity:.3}
+.montado{min-height:48px;border:2px dashed var(--ceu);border-radius:12px;padding:8px 12px;font-size:1.3em;letter-spacing:4px;font-weight:bold;color:var(--ceu2);background:#f3f8ff}
+/* como fazer */
+details.tipo{border:2px solid var(--linha);border-radius:14px;padding:8px 12px;margin:8px 0;background:#fff}
+details.tipo summary{font-weight:bold;cursor:pointer;color:var(--loco2)}
+.paraquem{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-top:6px}
+.paraquem>div{border-radius:12px;padding:8px 10px;font-size:.93em}
+.paraquem .cri{background:#eef5fc}
+.paraquem .mae{background:#fff3e6}
+table.analise{width:100%;border-collapse:collapse;font-size:.88em}
+table.analise td,table.analise th{border:1px solid #ead9bd;padding:4px 6px;text-align:left;vertical-align:top}
+table.analise th{background:#fbefd9}
+.st-ok{color:var(--ok);font-weight:bold}
+.st-no{color:var(--erro);font-weight:bold}
+.st-meio{color:#b97800;font-weight:bold}
+/* modal */
+.fundo-modal{position:fixed;inset:0;background:#2b2a33cc;display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
+.fundo-modal.aberto{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:440px;width:100%;padding:20px;text-align:center;animation:entra .3s}
+.painel-salvar{font-size:.85em;color:var(--cinza)}
+input.codigo{font-size:1em;padding:8px 10px;border-radius:12px;border:2px solid var(--linha);width:170px;text-transform:uppercase}
+table.rel{width:100%;border-collapse:collapse;font-size:.88em}
+table.rel td,table.rel th{border-bottom:1px solid #eee;padding:5px;text-align:left;vertical-align:top}
+.gab-q{border-top:2px dotted var(--linha);padding-top:8px;margin-top:10px}
+.gab-op{border-radius:10px;padding:5px 10px;margin:4px 0;font-size:.92em}
+.gab-op.certa{background:#e3f7ea;border:2px solid var(--ok)}
+.gab-op.cinza{background:#f2f1f3;color:#666}
+.gab-op.marcada{outline:3px solid var(--ceu)}
+.placar-final{text-align:center;font-size:1.3em}
+.trofeu{font-size:3em}
+footer{text-align:center;color:var(--cinza);font-size:.85em;padding:20px}
+.vocs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.voc{display:block;background:#fff;border:2px solid var(--linha);border-radius:14px;padding:8px 10px;text-align:center}
+.voc .vic{display:block;font-size:1.6em}
+.voc b{font-size:1.1em;color:var(--loco2)}
+.voc .vpt{display:block;color:#5f5b66;font-size:.88em}
+button.som{border:none;background:#e3eeff;border-radius:50%;width:34px;height:34px;padding:0;font-size:.85em;vertical-align:middle;margin-left:2px}
+button.som:active{transform:scale(.92)}
+.fen{display:inline-block;font-weight:bold;color:var(--ceu2)}
+@media (max-width:520px){body{font-size:17px}header.topo h1{font-size:1.4em}}
+</style>
+</head>
+<body>
+<div class="trilhos"></div>
+<header class="topo">
+<div class="trem">🚂🚃🚃🚃</div>
+<h1>Expresso Piuí</h1>
+<p><b>Revisão de Inglês · 3º ano</b></p>
+<p>Unit 7 – <i>Home Sweet Home</i> + Unit 8 – <i>Do You Play The Recorder?</i></p>
+</header>
+<div class="trilhos"></div>
+<nav class="abas" id="abas"></nav>
+<main>
+
+<!-- ============ INÍCIO ============ -->
+<section class="aba" id="sec-inicio">
+<div class="card">
+<h2>👋 Piuí! Bem-vindo a bordo, jovem aprendiz!</h2>
+<p>Eu sou a <b>Coruja Fifi</b> 🦉, a maquinista do <b>Expresso Piuí</b>. Nosso trem vai passar pelas <b>duas provas de inglês</b>: a das casas e de onde cada um mora (Unit 7) e a dos instrumentos e dias da semana (Unit 8). Em cada estação você ganha um <span class="bilhete">🎫 bilhete</span>. Aperte o <b>🔊</b> para ouvir as palavras em inglês!</p>
+</div>
+<div class="card">
+<h2>📋 O que esta revisão treina</h2>
+<ul>
+<li>🏠 <b>Casas e lugares:</b> castle, trailer, cave, house, boat, apartment · ocean, desert, jungle, woods, city, country.</li>
+<li>🐾 <b>Quem mora onde:</b> <i>The spider lives in a cave.</i> · <b>Where do you live?</b> <i>I live in a house.</i> · <b>Where does she live?</b> <i>She lives in a trailer.</i></li>
+<li>🙋 <b>Pronomes:</b> I · you · he · she · it.</li>
+<li>🔤 <b>Sons:</b> y / ie (sky, pie) e oa / ow (boat, yellow).</li>
+<li>🎺 <b>Instrumentos:</b> recorder, trumpet, drums, piano, violin, tambourine.</li>
+<li>🙋 <b>Do you…?</b> Yes, I do. / No, I don't. · 👦 <b>Does he…?</b> Yes, he does. / No, he doesn't.</li>
+<li>📅 <b>Dias da semana</b> e como <b>desembaralhar</b> (YADNOM → MONDAY).</li>
+</ul>
+<p class="sub">Tudo veio dos dois kits feitos com as fotos do livro (Unit 7 e Unit 8) e das duas provas mensais.</p>
+</div>
+<div class="card">
+<h2>🛤️ A viagem do trem</h2>
+<p class="sub">Os materiais abrem um por vez, na ordem. Conclua um para destravar o próximo.</p>
+<div class="trilha" id="trilhaCards"></div>
+</div>
+<div class="card">
+<h2>🧭 Como usar</h2>
+<ol>
+<li>Os materiais abrem <b>um por vez, na ordem</b>. Conclua um para destravar o próximo.</li>
+<li>Comece lendo a aba <b>🧭 Como fazer</b>: ela mostra, com calma, como resolver cada tipo de questão que caiu nas provas.</li>
+<li>Em cada estação, leia, ouça no <b>🔊</b> e responda às 3 perguntas. Errou? Leia a explicação e siga.</li>
+<li>Depois de terminar tudo, os materiais ficam abertos para revisar quantas vezes quiser.</li>
+</ol>
+<p class="sub">🔊 O áudio funciona melhor no Chrome ou no Safari (celular ou computador).</p>
+</div>
+<div class="card">
+<h2>💾 Seu progresso</h2>
+<p class="painel-salvar" id="painelSalvar">Seu progresso é salvo sozinho neste aparelho.</p>
+<button class="btn claro" id="btExportar">📥 Exportar</button>
+<button class="btn claro" id="btImportar">📤 Importar</button>
+<button class="btn claro" id="btZerar">🗑️ Zerar tudo</button>
+<input type="file" id="arqImportar" accept=".json,application/json" style="display:none">
+</div>
+<div class="card">
+<h2>📊 Relatório para os pais</h2>
+<p class="sub">Digite o código do Simulado (SIM-…) ou o código da família.</p>
+<input class="codigo" id="codPais" placeholder="Código" autocomplete="off">
+<button class="btn azul" id="btRelatorio">Abrir</button>
+<div id="areaPais"></div>
+<p class="sub" style="margin-top:10px">💡 <b>Dica para os pais:</b> o progresso fica no navegador deste aparelho. Se trocar de aparelho, use 📥 Exportar / 📤 Importar ou libere a trilha com o código da família.</p>
+<p class="sub">📄 Gabarito do Simulado separado, para os pais: <a href="gabarito.html">abrir gabarito</a> (pede o código da família).</p>
+</div>
+</section>
+
+<!-- ============ COMO FAZER ============ -->
+<section class="aba" id="sec-como">
+<div class="card">
+<h2>🧭 Como fazer cada tipo de questão</h2>
+<p>Estes são <b>os tipos de questão que caíram nas duas provas</b>. Clique em cada um para abrir. Em cada tipo tem um passo a passo <b>para a criança</b> 👧 e uma dica <b>para a mãe ou o pai</b> 👩 treinar em casa.</p>
+<p class="sub">Esta aba fica sempre aberta. Pode voltar aqui quantas vezes quiser.</p>
+</div>
+<div class="card">
+<h3>📝 Prova 1 (Unit 7 · Home Sweet Home)</h3>
+<div id="comoP1"></div>
+</div>
+<div class="card">
+<h3>📝 Prova 2 (Unit 8 · Do You Play The Recorder?)</h3>
+<div id="comoP2"></div>
+</div>
+<div class="card">
+<h3>🔎 Para os pais: o que caiu e o que mais errou</h3>
+<div id="analiseProvas"></div>
+</div>
+</section>
+
+<!-- ============ LEITURA GUIADA ============ -->
+<section class="aba" id="sec-leitura">
+<div class="card">
+<h2>📖 Leitura Guiada: as estações do trem</h2>
+<p>Leia cada estação e responda às <b>3 perguntas</b> do fim. A próxima estação abre quando você responder às 3. Clique no título para fechar ou abrir.</p>
+<div class="barra"><div id="barraLeitura"></div></div>
+<p class="sub" id="txtLeitura"></p>
+</div>
+<div id="blocosLeitura"></div>
+<div class="card" id="fimLeitura">
+<h2>⚠️ Pegadinhas do trilho</h2>
+<ol>
+<li><b>in the</b> + lugar (in the ocean, in the city) · <b>in a</b> + moradia (in a cave, in a house) · <b>in an</b> apartment.</li>
+<li>Resposta completa: <b>I live in a house.</b> e não "I live house".</li>
+<li>Menina ou mulher → <b>She</b> · menino, homem ou rei → <b>He</b> · animal ou coisa → <b>It</b> · "Me?" → <b>I</b> · pergunta para alguém → <b>you</b>.</li>
+<li>Com he / she / it o verbo ganha <b>s</b>: She <b>lives</b>. Com I / you, não: I <b>live</b>.</li>
+<li>Torta = <b>pie</b> (com IE) · céu = <b>sky</b> (com Y).</li>
+<li><b>yellow</b> termina com <b>ow</b>; <b>boat</b> tem <b>oa</b>.</li>
+<li><b>Do you…?</b> → Yes, I do. / No, I don't. · <b>Does he…?</b> → Yes, he does. / No, he doesn't. Não misture!</li>
+<li>Desembaralhar dia da semana: ache o <b>DAY</b> e coloque no fim; o resto é o começo do dia (MON, FRI, SUN…).</li>
+<li><b>Wed·nes·day</b>: três pedacinhos.</li>
+<li>Nunca deixe em branco: as palavras costumam aparecer nas outras questões da prova!</li>
+</ol>
+<h3>🗂️ Onde está cada assunto</h3>
+<table class="rel">
+<tr><th>Assunto (questão da prova)</th><th>Estação</th></tr>
+<tr><td>Casas e lugares (P1 · q. 6 e 8)</td><td>1</td></tr>
+<tr><td>Quem mora onde (P1 · q. 2)</td><td>2</td></tr>
+<tr><td>Where do you live? / Where does she live? (P1 · q. 3 e 7)</td><td>3</td></tr>
+<tr><td>I / you / he / she / it (P1 · q. 4)</td><td>4</td></tr>
+<tr><td>Y ou IE · oa e ow (P1 · q. 5)</td><td>5</td></tr>
+<tr><td>Instrumentos, completar letras (P2 · q. 2, 5 e 7)</td><td>6</td></tr>
+<tr><td>Do you…? Yes, I do / No, I don't (P2 · q. 3 e 4)</td><td>7</td></tr>
+<tr><td>Days of the week, desembaralhar (P2 · q. 2 e 6)</td><td>8</td></tr>
+<tr><td>Does he…? Yes, he does / No, he doesn't (P2 · q. 8)</td><td>9</td></tr>
+<tr><td>Tudo misturado</td><td>10</td></tr>
+</table>
+</div>
+<div class="card" style="text-align:center">
+<button class="btn loco" data-proximo="mapa">🧠 Próximo: Mapa Mental para encaixar</button>
+</div>
+</section>
+
+<!-- ============ MAPA MENTAL ============ -->
+<section class="aba" id="sec-mapa">
+<div class="card">
+<h2>🧠 Mapa da Ferrovia (Mapa Mental para encaixar)</h2>
+<p>O mapa do trem está com <b>peças faltando</b>. Em cada buraco, clique na palavra certa. Acertou? A peça fica verde. Errou? Ela balança e você tenta de novo.</p>
+</div>
+<div class="contador" id="contadorMapa">🧩 Mapa: 0 peças encaixadas</div>
+<div class="mapa incompleto" id="mapa">
+<div class="centro">🚂 Revisão · Units 7 e 8<br><span style="font-weight:normal;font-size:.85em">homes · places · pronouns · sounds · instruments · do / does · days</span></div>
+<div class="ramos" id="ramosMapa"></div>
+</div>
+<div class="card" id="mapaFim" style="display:none;text-align:center">
+<div class="trofeu">🧠</div>
+<h2>Mapa completo!</h2>
+<p>Foi você que montou esse mapa. Agora a ferrovia está inteira e colorida!</p>
+</div>
+<div class="card" style="text-align:center">
+<button class="btn loco" data-proximo="vf">🚦 Próximo: Sinal Verde ou Vermelho</button>
+</div>
+</section>
+
+<!-- ============ VERDADEIRO OU FALSO ============ -->
+<section class="aba" id="sec-vf">
+<div class="card" id="vfJogo"></div>
+<div class="card" style="text-align:center">
+<button class="btn loco" data-proximo="resumo">🗺️ Próximo: Resumo</button>
+</div>
+</section>
+
+<!-- ============ RESUMO ============ -->
+<section class="aba" id="sec-resumo">
+<div class="card">
+<h2>🗺️ Painel da Estação (Resumo)</h2>
+<p>Tudo o que cai na prova numa página só. Aperte o 🔊 para ouvir. Leia até o fim: lá embaixo tem um botão para marcar que você terminou.</p>
+</div>
+<div class="card">
+<h2>📅 A semana do menino, em ordem</h2>
+<p class="sub">A semana do Workbook (p. 65), a mesma ideia da última questão da prova 2.</p>
+<div class="linha-tempo" id="linhaTempo"></div>
+</div>
+<div class="card">
+<h2>🏠 Onde cada um mora</h2>
+<div class="duas">
+<div class="regra">🌍 <b>in the</b> + lugar<br>in the ocean · in the desert · in the woods · in the jungle · in the city · in the country</div>
+<div class="regra azulado">🏠 <b>in a</b> + moradia<br>in a house · in a castle · in a cave · in a trailer · in a boat<br>⚠️ in <b>an</b> apartment</div>
+</div>
+<table class="mini"><tr><th>Pergunta</th><th>Resposta</th></tr>
+<tr><td>Where do you live? <button class="som" data-fala="Where do you live?">🔊</button></td><td>I live in a house. <button class="som" data-fala="I live in a house.">🔊</button></td></tr>
+<tr><td>Where does she live? <button class="som" data-fala="Where does she live?">🔊</button></td><td>She lives in a trailer. <button class="som" data-fala="She lives in a trailer.">🔊</button></td></tr>
+<tr><td>Where does he live? <button class="som" data-fala="Where does he live?">🔊</button></td><td>He lives in an apartment. <button class="som" data-fala="He lives in an apartment.">🔊</button></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>🙋 Quem é? (pronomes)</h2>
+<table class="mini"><tr><th>Pronome</th><th>Quando usar</th><th>Exemplo</th></tr>
+<tr><td><b>I</b></td><td>eu ("Me?")</td><td>Me? I live in the city. <button class="som" data-fala="Me? I live in the city.">🔊</button></td></tr>
+<tr><td><b>you</b></td><td>você (falando COM alguém)</td><td>Where do you live? <button class="som" data-fala="Where do you live?">🔊</button></td></tr>
+<tr><td><b>he</b></td><td>ele: menino, homem, rei</td><td>This is the king. He lives in a castle. <button class="som" data-fala="This is the king. He lives in a castle.">🔊</button></td></tr>
+<tr><td><b>she</b></td><td>ela: menina, mulher, avó</td><td>This is my grandma. She lives in a house. <button class="som" data-fala="This is my grandma. She lives in a house.">🔊</button></td></tr>
+<tr><td><b>it</b></td><td>animal ou coisa</td><td>This is a spider. It lives in a cave. <button class="som" data-fala="This is a spider. It lives in a cave.">🔊</button></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>🙋 Do e Does</h2>
+<table class="mini"><tr><th></th><th>VOCÊ (you)</th><th>ELE (he)</th></tr>
+<tr><td>❓ Pergunta</td><td>Do you play the drums? <button class="som" data-fala="Do you play the drums?">🔊</button></td><td>Does he play the drums? <button class="som" data-fala="Does he play the drums?">🔊</button></td></tr>
+<tr><td>👍 Sim</td><td>Yes, I do. <button class="som" data-fala="Yes, I do.">🔊</button></td><td>Yes, he does. <button class="som" data-fala="Yes, he does.">🔊</button></td></tr>
+<tr><td>👎 Não</td><td>No, I don't. <button class="som" data-fala="No, I don't.">🔊</button></td><td>No, he doesn't. <button class="som" data-fala="No, he doesn't.">🔊</button></td></tr>
+</table>
+<div class="regra">🎹 Instrumento <b>com the</b>: play the piano · ⚽ Jogo e esporte <b>sem the</b>: play soccer, play video games.</div>
+</div>
+<div class="card">
+<h2>🔤 Palavras importantes</h2>
+<div class="vocs" id="gradeVocab"></div>
+</div>
+<div class="card">
+<h2>🔤 Os sons</h2>
+<div class="duas">
+<div class="regra">☁️ <b>y</b>: sky · fly · my <button class="som" data-fala="sky, fly, my">🔊</button><br>🥧 <b>ie</b>: pie <button class="som" data-fala="pie">🔊</button><br>⬆️ <b>igh</b>: high <button class="som" data-fala="high">🔊</button></div>
+<div class="regra azulado">🛶 <b>oa</b>: boat · coat · goat <button class="som" data-fala="boat, coat, goat">🔊</button><br>🌊 <b>ow</b>: row · low · yellow <button class="som" data-fala="row, low, yellow">🔊</button></div>
+</div>
+</div>
+<div class="card">
+<h2>📌 Dicas de prova</h2>
+<div class="postits">
+<div class="postit">"Where do you live?" → <b>I live in a house.</b> Três pedaços: I live + in a + house. (Na prova saiu "I live house".)</div>
+<div class="postit">Menina = <b>She</b> · Rei = <b>He</b> · "Me?" = <b>I</b>. (Na prova saiu "you" e "he" no lugar.)</div>
+<div class="postit">Torta = <b>P + IE = PIE</b>.</div>
+<div class="postit">Desembaralhar: ache o <b>DAY</b> → YADNOM = MON + DAY = <b>MONDAY</b> · YADIRF = <b>FRIDAY</b>.</div>
+<div class="postit"><b>Wed·nes·day</b>: W-E-D-N-E-S-D-A-Y.</div>
+<div class="postit">Pergunta com <b>Does he</b>? Resposta com <b>he does / he doesn't</b>. Olhe a figura do dia antes de responder!</div>
+<div class="postit">"___ play the drums? Yes, ___." → <b>Do you</b> … <b>I do</b>. Nunca deixe em branco!</div>
+<div class="postit">Teclas pretas e brancas (black and white keys) = <b>piano</b>.</div>
+</div>
+</div>
+<div class="card relampago">
+<h2>⚡ Mini-quiz relâmpago</h2>
+<p class="sub">Pense na resposta e clique para conferir.</p>
+<div id="relampago"></div>
+</div>
+<div class="card" style="text-align:center" id="fimResumo">
+<p>Chegou até aqui? Então marque:</p>
+<button class="btn" id="btLiResumo" disabled>✅ Li o resumo até o fim</button>
+<p class="sub" id="txtLiResumo">O botão acende quando você chegar ao fim da página.</p>
+<button class="btn loco" data-proximo="simulado">📝 Pronto para o Simulado!</button>
+</div>
+</section>
+
+<!-- ============ SIMULADO ============ -->
+<section class="aba" id="sec-simulado">
+<div class="card">
+<h2>📝 Grande Viagem (Simulado)</h2>
+<p><b>25 questões</b> no jeito da prova. Em algumas você clica na alternativa; nas de <b>desembaralhar</b>, clique nas letras na ordem certa para montar a palavra. No final, clique em <b>Enviar</b>. Depois aparecem sua nota, seu código e o gabarito comentado (com 🔊).</p>
+<div class="barra"><div id="barraSim"></div></div>
+<p class="sub" id="txtSim"></p>
+</div>
+<div id="questoesSim"></div>
+<div class="card" style="text-align:center" id="envioSim">
+<button class="btn loco" id="btEnviarSim">📨 Enviar Simulado</button>
+</div>
+<div id="resultadoSim"></div>
+</section>
+
+</main>
+<footer>🚂 Expresso Piuí · Revisão de Inglês 3º ano · Units 7 e 8 · conteúdo dos kits feitos com as fotos do livro e das duas provas mensais</footer>
+
+<div class="fundo-modal" id="fundoModal"><div class="modal" id="modal"></div></div>
+<script>
+// ===================== DADOS =====================
+// Fontes: kit "Lar Doce Lar" (Unit 7 Home Sweet Home) e kit "Escolinha Dó-Ré-Mi" (Unit 8 Do You Play The Recorder?),
+// ambos feitos com as fotos do livro (Student's Book e Workbook), + Avaliação Mensal 1 e Avaliação Mensal 2 (3º ano).
+const W = (en, pt, ic) => `<span class="voc">${ic?`<span class="vic">${ic}</span>`:''}<b>${en}</b> <button class="som" data-fala="${en}" title="ouvir">🔊</button><span class="vpt">${pt}</span></span>`;
+const F = en => `<span class="fen">${en} <button class="som" data-fala="${en.replace(/<[^>]+>/g,'')}" title="ouvir">🔊</button></span>`;
+const SEMANA = [
+ {d:'Monday', pt:'segunda', ic:'🥁', en:'plays the drums', a:'toca bateria'},
+ {d:'Tuesday', pt:'terça', ic:'🎹', en:'plays the piano', a:'toca piano'},
+ {d:'Wednesday', pt:'quarta', ic:'🎮', en:'plays video games', a:'joga video game'},
+ {d:'Thursday', pt:'quinta', ic:'🚲', en:'rides his bike', a:'anda de bicicleta'},
+ {d:'Friday', pt:'sexta', ic:'🎻', en:'plays the violin', a:'toca violino'},
+ {d:'Saturday', pt:'sábado', ic:'📖', en:'reads books', a:'lê livros'},
+ {d:'Sunday', pt:'domingo', ic:'🎨', en:'paints', a:'pinta'}
+];
+const TAB_SEMANA = '<table class="mini"><tr><th>Day</th><th>O que o menino faz (Workbook p. 65)</th></tr>'+SEMANA.map(s=>`<tr><td><b>${s.d}</b></td><td>${s.ic} ${s.en} <span class="sub">(${s.a})</span></td></tr>`).join('')+'</table>';
+
+const BLOCOS = [
+{ id:'b1', emoji:'🏠', titulo:'Estação 1 · Casas e lugares', cor:'#D64045',
+html:`<p class="narrador">Coruja Fifi diz: "Piuí! Primeira parada: as palavras de <b>casas</b> e de <b>lugares</b> da Unit 7. Aperte o 🔊 para ouvir cada uma!"</p>
+<h3>🏠 Moradias (onde se mora)</h3>
+<div class="vocs">${W('castle','castelo','🏰')}${W('trailer','trailer (casa que anda)','🚐')}${W('cave','caverna','🕳️')}${W('house','casa','🏠')}${W('boat','barco','⛵')}${W('apartment','apartamento','🏢')}</div>
+<h3>🌍 Lugares (ambientes)</h3>
+<div class="vocs">${W('ocean','oceano','🌊')}${W('desert','deserto','🏜️')}${W('jungle','selva','🌴')}${W('woods','bosque','🌲')}${W('city','cidade','🏙️')}${W('country','campo','🌾')}</div>
+<div class="caixa">🔎 <b>Parecidas, mas diferentes:</b> <b>cave</b> = caverna · <b>castle</b> = castelo. E para mostrar sua casa: ${F('This is my house.')}</div>`,
+como:`<b>🧭 Como fazer</b> "Pick the correct word" (escolher a palavra da figura) e "Look and circle" (circular):<ol><li>Olhe a figura e diga em português o que é (ex.: barco).</li><li>Procure a palavra em inglês que quer dizer isso (barco = <b>boat</b>).</li><li>Leia a frase inteira com a palavra escolhida para conferir: <i>It lives in the <b>ocean</b>.</i></li></ol>`,
+qs:[
+{q:"Na prova, a figura mostrava um barco grande na água. Qual palavra escolher?", o:[
+{t:"boat",ok:1,w:"Isso! boat = barco."},
+{t:"house",w:"house é casa, e casa fica em terra firme."},
+{t:"apartment",w:"apartment é apartamento."},
+{t:"cave",w:"cave é caverna."}]},
+{q:"Qual grupo tem SÓ moradias (lugares onde se mora)?", o:[
+{t:"castle, trailer, apartment",ok:1,w:"Certo! As três são moradias."},
+{t:"ocean, desert, jungle",w:"Essas três são lugares (ambientes), não moradias."},
+{t:"house, woods, city",w:"woods e city são lugares."},
+{t:"cave, ocean, country",w:"ocean e country são lugares."}]},
+{q:"cave e castle são parecidas. O que cada uma quer dizer?", o:[
+{t:"cave = caverna · castle = castelo",ok:1,w:"Perfeito!"},
+{t:"cave = castelo · castle = caverna",w:"Está trocado: cave é caverna."},
+{t:"cave = casa · castle = campo",w:"Casa é house e campo é country."},
+{t:"cave = barco · castle = cidade",w:"Barco é boat e cidade é city."}]}
+]},
+{ id:'b2', emoji:'🐾', titulo:'Estação 2 · Quem mora onde?', cor:'#2A9D8F',
+html:`<p class="narrador">Coruja Fifi diz: "Segunda parada: cada um mora num lugar! Olhe os animais do livro e os que caíram na prova 1."</p>
+<p>O padrão é: <b>The [quem] lives in [onde].</b></p>
+<div class="regra">${F('The iguana lives in the desert.')} 🦎<br>${F('The bird lives in the city.')} 🐦<br>${F('The bear lives in the woods.')} 🐻<br>${F('The fish lives in the ocean.')} 🐟<br>${F('The cow lives in the country.')} 🐄<br>${F('The monkey lives in the jungle.')} 🐒</div>
+<p>Na prova 1 também apareceram:</p>
+<div class="regra azulado">${F('The spider lives in a cave.')} 🕷️<br>${F('My grandma lives in a house.')} 👵<br>${F('The king lives in a castle.')} 🤴<br>${F('The octopus lives in the ocean.')} 🐙</div>
+<div class="caixa">👀 <b>Olhe a palavrinha antes:</b> lugar → <b>in the</b> (in the ocean, in the woods) · moradia → <b>in a</b> (in a cave, in a castle, in a house) · e <b>in an apartment</b>.</div>`,
+como:`<b>🧭 Como fazer</b> "Look and read. Then connect" (ligar):<ol><li>Leia quem é: <i>The spider</i> = a aranha.</li><li>Pense: onde ela mora? (numa caverna = <b>in a cave</b>).</li><li>Ligue com <b>uma linha só</b>, de ponta a ponta, sem passar por cima das palavras.</li><li>No fim, confira: cada frase da direita só pode ter <b>uma</b> linha chegando.</li></ol>`,
+qs:[
+{q:"The octopus lives…", o:[
+{t:"in the ocean.",ok:1,w:"Isso! O polvo mora no oceano."},
+{t:"in the desert.",w:"No deserto mora a iguana."},
+{t:"in a castle.",w:"No castelo mora o rei (the king)."},
+{t:"in a cave.",w:"Na caverna mora a aranha (the spider)."}]},
+{q:"My grandma lives…", o:[
+{t:"in a house.",ok:1,w:"Certo! A vovó mora numa casa."},
+{t:"in the ocean.",w:"No oceano moram o peixe e o polvo."},
+{t:"in the woods.",w:"No bosque mora o urso."},
+{t:"in the jungle.",w:"Na selva mora o macaco."}]},
+{q:"Qual frase está escrita certinha?", o:[
+{t:"The spider lives in a cave.",ok:1,w:"Perfeito: lives (com s) + in a + cave."},
+{t:"The spider lives cave.",w:"Faltou o pedacinho in a: lives in a cave."},
+{t:"The spider live in a cave.",w:"Falando de um animal, o verbo ganha s: lives."},
+{t:"The spider lives in the cave a.",w:"O a vem antes de cave: in a cave."}]}
+]},
+{ id:'b3', emoji:'🗣️', titulo:'Estação 3 · Where do you live? · Where does she live?', cor:'#3A86FF',
+html:`<p class="narrador">Coruja Fifi diz: "Terceira parada: perguntar e responder onde alguém mora. Esta caiu duas vezes na prova 1!"</p>
+<div class="regra">❓ ${F('Where do you live?')} = Onde <b>você</b> mora?<br>👉 ${F('I live in a house.')} = Eu moro numa casa.<br>👉 ${F('I live in the city.')} = Eu moro na cidade.</div>
+<div class="regra azulado">❓ ${F('Where does she live?')} = Onde <b>ela</b> mora?<br>👉 ${F('She lives in a trailer.')} = Ela mora num trailer.<br>❓ ${F('Where does he live?')} = Onde <b>ele</b> mora?<br>👉 ${F('He lives in an apartment.')} = Ele mora num apartamento.</div>
+<div class="caixa">🧩 A resposta completa tem <b>3 pedaços</b>: <b>I live</b> + <b>in a</b> + <b>house</b>. Se a pergunta é sobre <b>ela</b>: <b>She lives</b> (com s) + <b>in a</b> + <b>trailer</b>.</div>
+<div class="erro-prova">📝 <b>Na prova 1:</b> a família da figura estava na frente de um <b>trailer</b> 🚐. A resposta era <b>She lives in a trailer.</b> E na questão 7 saiu "I live house": faltou o <b>in a</b>.</div>`,
+como:`<b>🧭 Como fazer</b> "Where does she live? Answer" e "Where do you live? Answer":<ol><li>Ache quem está na pergunta: <b>you</b> → responda com <b>I live</b> · <b>she</b> → <b>She lives</b> · <b>he</b> → <b>He lives</b>.</li><li>Olhe a figura: é moradia? → <b>in a</b> (ou <b>in an apartment</b>). É lugar? → <b>in the</b>.</li><li>Termine com a palavra da figura e um ponto final.</li><li>Leia em voz alta: tem os 3 pedaços? Então está completa!</li></ol>`,
+qs:[
+{q:"Where do you live? (você mora num apartamento 🏢)", o:[
+{t:"I live in an apartment.",ok:1,w:"Isso! I live + in an + apartment."},
+{t:"I live apartment.",w:"Faltou o pedaço in an."},
+{t:"I lives in an apartment.",w:"Com I, sem s: I live."},
+{t:"She lives in an apartment.",w:"A pergunta foi para você (you), então a resposta começa com I."}]},
+{q:"A figura mostra uma menina e a família dela na frente de um trailer 🚐. Where does she live?", o:[
+{t:"She lives in a trailer.",ok:1,w:"Certo! Pergunta sobre ela → She lives in a trailer."},
+{t:"She lives in a castle.",w:"Na figura é um trailer, não um castelo."},
+{t:"I live in a trailer.",w:"A pergunta é sobre ELA (she), não sobre você."},
+{t:"She live trailer.",w:"Faltaram o s (lives) e o in a."}]},
+{q:"Na resposta \"I live in a house\", qual pedaço some quando alguém escreve \"I live house\"?", o:[
+{t:"in a",ok:1,w:"Isso! Sem o in a a frase fica incompleta."},
+{t:"the",w:"Com moradia usamos a, não the."},
+{t:"lives",w:"Com I usamos live, sem s."},
+{t:"Where",w:"Where fica na pergunta, não na resposta."}]}
+]},
+{ id:'b4', emoji:'🙋', titulo:'Estação 4 · I · you · he · she · it', cor:'#FFB703',
+html:`<p class="narrador">Coruja Fifi diz: "Quarta parada: os pronomes dizem QUEM mora. Foi a questão com mais erros da prova 1, então vamos com calma!"</p>
+<table class="mini"><tr><th>Pronome</th><th>Quer dizer</th><th>Use para</th></tr>
+<tr><td><b>I</b> <button class="som" data-fala="I">🔊</button></td><td>eu</td><td>você mesmo ("Me?" = eu?)</td></tr>
+<tr><td><b>you</b> <button class="som" data-fala="you">🔊</button></td><td>você</td><td>a pessoa com quem você fala</td></tr>
+<tr><td><b>he</b> <button class="som" data-fala="he">🔊</button></td><td>ele</td><td>menino, homem, rei</td></tr>
+<tr><td><b>she</b> <button class="som" data-fala="she">🔊</button></td><td>ela</td><td>menina, mulher, avó</td></tr>
+<tr><td><b>it</b> <button class="som" data-fala="it">🔊</button></td><td>isto</td><td>animal ou coisa</td></tr></table>
+<div class="regra">${F('This is Sam. He lives in an apartment.')}<br>${F('This is a spider. It lives in a cave.')}<br>${F('Me? I live in the city.')}<br>${F('Where do you live?')}</div>
+<div class="caixa">💡 I / you → <b>live</b> · he / she / it → <b>lives</b> (com s).</div>
+<div class="erro-prova">📝 <b>Na prova 1:</b> Dina (menina) → <b>She</b> (saiu "you") · the King (homem) → <b>He</b> (saiu "you") · "Me?" → <b>I</b> (saiu "he") · "Where do ___ live?" → <b>you</b> (saiu "he"). O <b>It</b> da aranha estava certo!</div>`,
+como:`<b>🧭 Como fazer</b> "Read and complete it with I / you / he / she / it":<ol><li>Leia a primeira frase e descubra <b>quem é</b> (This is Dina → uma menina).</li><li>Pergunte: menina ou mulher? <b>She</b>. Menino ou homem? <b>He</b>. Animal ou coisa? <b>It</b>. "Me?" (eu)? <b>I</b>. Estou perguntando PARA alguém? <b>you</b>.</li><li>Confira o verbo: se vier <b>lives</b>, só pode ser he, she ou it. Se vier <b>live</b>, é I ou you.</li></ol>`,
+qs:[
+{q:"This is my grandma. ___ lives in a house.", o:[
+{t:"She",ok:1,w:"Isso! Avó é mulher → She."},
+{t:"He",w:"He é para menino ou homem."},
+{t:"It",w:"It é para animal ou coisa."},
+{t:"You",w:"You é para a pessoa com quem você fala, e o verbo seria live."}]},
+{q:"Me? ___ live in the country.", o:[
+{t:"I",ok:1,w:"Certo! Me? = eu? → I live."},
+{t:"He",w:"Com he o verbo seria lives, e \"Me?\" fala de mim."},
+{t:"It",w:"It é para animal ou coisa."},
+{t:"She",w:"Com she o verbo seria lives."}]},
+{q:"This is a monkey. ___ lives in the jungle.", o:[
+{t:"It",ok:1,w:"Isso! Animal → It, igual à aranha da prova: It lives in a cave."},
+{t:"I",w:"I é eu, e o verbo seria live."},
+{t:"You",w:"You é você, e o verbo seria live."},
+{t:"She",w:"No livro e na prova, para animal usamos It."}]}
+]},
+{ id:'b5', emoji:'🔤', titulo:'Estação 5 · Os sons: y / ie e oa / ow', cor:'#8E6FC4',
+html:`<p class="narrador">Coruja Fifi diz: "Quinta parada: a estação dos sons! A Unit 7 tem y e ie; a Unit 8 tem oa e ow."</p>
+<div class="duas"><div class="regra"><b>Unit 7</b><br>⬆️ <b>igh</b> → ${F('high')}<br>☁️ <b>y</b> → ${F('sky')} ${F('fly')} ${F('my')}<br>🥧 <b>ie</b> → ${F('pie')}</div>
+<div class="regra azulado"><b>Unit 8</b><br>🛶 <b>oa</b> → ${F('boat')} ${F('coat')} ${F('goat')}<br>🌊 <b>ow</b> → ${F('row')} ${F('low')} ${F('yellow')}</div></div>
+<div class="caixa">🎵 ${F('The birds fly high in the sky. The birds love apple pie.')}<br>🐐 ${F('The goat rows her yellow boat.')}</div>
+<div class="erro-prova">📝 <b>Na prova 1:</b> a figura era uma torta e estava escrito <b>P__</b>. O certo: <b>P + IE = PIE</b>.</div>`,
+como:`<b>🧭 Como fazer</b> "Complete using Y or IE":<ol><li>Olhe a figura e fale a palavra em voz alta (torta = <b>pie</b>).</li><li>Lembre dos grupos: sky, fly, my → <b>Y</b> · pie → <b>IE</b>.</li><li>Escreva <b>só as letras que faltam</b> no espaço: P + <b>IE</b>.</li><li>Leia a palavra inteira para conferir.</li></ol>`,
+qs:[
+{q:"Complete com Y ou IE: sk__ (céu)", o:[
+{t:"y → sky",ok:1,w:"Isso! sky, como fly e my."},
+{t:"ie → skie",w:"Céu é sky, com y."},
+{t:"oa → skoa",w:"oa é de boat, coat e goat."},
+{t:"ow → skow",w:"ow é de row, low e yellow."}]},
+{q:"Como se escreve torta (apple pie)?", o:[
+{t:"pie",ok:1,w:"Certo! p + ie."},
+{t:"py",w:"O y é de sky, fly, my. Torta é com ie."},
+{t:"poa",w:"oa é de boat."},
+{t:"pow",w:"ow é de yellow."}]},
+{q:"Qual grupo tem SÓ palavras com ow?", o:[
+{t:"row, low, yellow",ok:1,w:"Isso! As três com ow."},
+{t:"boat, coat, goat",w:"Essas três são com oa."},
+{t:"sky, fly, my",w:"Essas três são com y."},
+{t:"pie, high, sky",w:"Essas são da Unit 7: ie, igh e y."}]}
+]},
+{ id:'b6', emoji:'🎺', titulo:'Estação 6 · Os instrumentos', cor:'#D64045',
+html:`<p class="narrador">Coruja Fifi diz: "Sexta parada: entramos na Unit 8! O trem agora tem um vagão de música."</p>
+<div class="vocs">${W('recorder','flauta doce','🎶')}${W('trumpet','trompete','🎺')}${W('drums','bateria','🥁')}${W('piano','piano','🎹')}${W('violin','violino','🎻')}${W('tambourine','pandeiro','🔔')}</div>
+<div class="regra">${F('I can play the drums.')} = Eu sei tocar bateria.<br>${F('I like playing the piano!')} = Eu gosto de tocar piano!</div>
+<div class="regra azulado">🎹 Pista da prova 2: ${F('It has black and white keys.')} = Tem teclas pretas e brancas → <b>piano</b>.</div>
+<div class="caixa">✍️ <b>Soletrando devagar:</b> t·r·u·m·p·e·t · v·i·o·l·i·n · d·r·u·m·s · r·e·c·o·r·d·e·r · t·a·m·b·o·u·r·i·n·e</div>`,
+como:`<b>🧭 Como fazer</b> "Read and complete" (completar letras), "Pick the correct option" e "Write the name of the instrument":<ol><li><b>Completar letras:</b> conte os tracinhos, fale a palavra devagar (trum-pet) e escreva uma letra em cada tracinho.</li><li><b>Pick the correct option:</b> olhe a figura (🥁) e circule a palavra (drums).</li><li><b>Write the name:</b> leia a pista em inglês e procure a palavra-chave (keys = teclas → piano).</li></ol>`,
+qs:[
+{q:"Qual palavra está escrita certinha?", o:[
+{t:"violin",ok:1,w:"Isso! v·i·o·l·i·n."},
+{t:"violen",w:"O final é -lin: violin."},
+{t:"vionil",w:"As letras ficaram trocadas: violin."},
+{t:"violim",w:"Termina com n: violin."}]},
+{q:"It has black and white keys. (Tem teclas pretas e brancas.)", o:[
+{t:"piano",ok:1,w:"Certo! O piano tem teclas pretas e brancas."},
+{t:"drums",w:"drums (bateria) se toca com baquetas."},
+{t:"trumpet",w:"trumpet (trompete) se toca soprando."},
+{t:"recorder",w:"recorder (flauta doce) se toca soprando."}]},
+{q:"Complete: I play the t r _ m p _ t.", o:[
+{t:"u e → trumpet",ok:1,w:"Isso! t·r·U·m·p·E·t."},
+{t:"a e → trampet",w:"O primeiro buraco é u: trum."},
+{t:"u i → trumpit",w:"O segundo buraco é e: pet."},
+{t:"o a → trompat",w:"Em inglês é trumpet."}]}
+]},
+{ id:'b7', emoji:'🙋', titulo:'Estação 7 · Do you play…?', cor:'#2A9D8F',
+html:`<p class="narrador">Coruja Fifi diz: "Sétima parada: perguntar para alguém se ele toca um instrumento. É só começar com DO YOU!"</p>
+<div class="regra">❓ ${F('Do you play the violin?')} = Você toca violino?<br>👍 ${F('Yes, I do.')} = Sim, eu toco.<br>👎 ${F('No, I don\'t.')} = Não, eu não toco.</div>
+<p>Na história do livro, o urso responde <i>"Yes, I do."</i> e o menino responde <i>"No, I don't. I play soccer."</i></p>
+<div class="duas"><div class="regra">🎹 <b>Com the</b> (instrumentos)<br>the piano · the drums · the violin</div><div class="regra azulado">⚽ <b>Sem the</b> (jogos e esportes)<br>soccer · video games · board games</div></div>
+<div class="caixa">✍️ Escreva certinho: <b>Yes, I do.</b> → letra maiúscula, vírgula, <b>I</b> maiúsculo e ponto final.</div>
+<div class="erro-prova">📝 <b>Na prova 2:</b> a questão "___ play the drums? Yes, ___." ficou <b>em branco</b>. A resposta: <b>Do you</b> play the drums? Yes, <b>I do</b>.</div>`,
+como:`<b>🧭 Como fazer</b> "Answer Yes, I do or No, I don't" e "Complete the sentences":<ol><li><b>Yes, I do / No, I don't:</b> é a SUA resposta. Você toca? Copie <b>Yes, I do.</b> Não toca? <b>No, I don't.</b></li><li><b>Dois buracos (___ play the drums? Yes, ___):</b> o 1º é o começo da pergunta → <b>Do you</b>. O 2º é a resposta curta → <b>I do</b>.</li><li>Dica de ouro: as palavras que faltam aparecem na questão de cima! Nunca deixe em branco.</li></ol>`,
+qs:[
+{q:"Complete: ___ ___ play the drums? Yes, I do.", o:[
+{t:"Do you",ok:1,w:"Isso! Do you play the drums? Yes, I do."},
+{t:"Does he",w:"A resposta é \"I do\", então a pergunta foi para você: Do you."},
+{t:"You do",w:"Na pergunta, o Do vem primeiro: Do you…?"},
+{t:"Do I",w:"A pergunta é para você: Do YOU…?"}]},
+{q:"Do you play the tambourine? (você NÃO toca)", o:[
+{t:"No, I don't.",ok:1,w:"Certo! Não toca → No, I don't."},
+{t:"Yes, I do.",w:"Essa resposta quer dizer que você toca."},
+{t:"No, he doesn't.",w:"he doesn't fala de outra pessoa. A pergunta foi para você."},
+{t:"No, I do.",w:"Depois de No vem I don't."}]},
+{q:"Qual está escrita certinha?", o:[
+{t:"Yes, I do.",ok:1,w:"Perfeito: maiúscula, vírgula, I maiúsculo, ponto."},
+{t:"yes i do",w:"Faltaram as maiúsculas, a vírgula e o ponto."},
+{t:"Yes, I does.",w:"Com I usamos do: Yes, I do."},
+{t:"Yes, I don't.",w:"Yes combina com do; don't combina com No."}]}
+]},
+{ id:'b8', emoji:'📅', titulo:'Estação 8 · Days of the week + desembaralhar', cor:'#3A86FF',
+html:`<p class="narrador">Coruja Fifi diz: "Oitava parada: o trem passa pelos 7 dias da semana. E vou te ensinar o truque para desembaralhar!"</p>
+<div class="vocs">${W('Monday','segunda-feira','1️⃣')}${W('Tuesday','terça-feira','2️⃣')}${W('Wednesday','quarta-feira','3️⃣')}${W('Thursday','quinta-feira','4️⃣')}${W('Friday','sexta-feira','5️⃣')}${W('Saturday','sábado','🎉')}${W('Sunday','domingo','☀️')}</div>
+<div class="regra">🔤 Os dias começam sempre com <b>letra maiúscula</b>. E <b>todos terminam em DAY</b>!</div>
+<div class="regra azulado">🧩 <b>Truque do DAY:</b> YADNOM → ache <b>D, A, Y</b> e guarde para o fim → sobram <b>N, O, M</b> → que começo de dia tem essas letras? <b>MON</b> → <b>MONDAY</b>. Nessas da prova, a palavra estava escrita <b>de trás para frente</b>: leia Y-A-D-N-O-M do fim para o começo → M-O-N-D-A-Y.</div>
+<div class="caixa">✍️ <b>Wed·nes·day</b>: separe em 3 pedacinhos. Thurs·day · Fri·day · Sat·ur·day.</div>
+<div class="erro-prova">📝 <b>Na prova 2:</b> YADNOM virou "NOM DAY" e YADIRF virou "FIR DAY": o DAY estava certo, mas o começo ficou invertido. O certo: <b>MONDAY</b> e <b>FRIDAY</b>. E <b>Wednesday</b> saiu com letras erradas.</div>`,
+como:`<b>🧭 Como fazer</b> "Unscramble the words" (desembaralhar):<ol><li>Ache as letras <b>D, A, Y</b> e escreva DAY no fim.</li><li>Olhe as letras que sobraram e pense num começo de dia: MON, TUES, WEDNES, THURS, FRI, SATUR, SUN.</li><li>Risque cada letra que usar. Sobrou alguma? Algo está errado.</li><li>Leia a palavra montada: ela existe? Então está certa!</li></ol>`,
+qs:[
+{q:"Desembaralhe: YADIRF", o:[
+{t:"FRIDAY",ok:1,w:"Isso! Sobra F, R, I → FRI + DAY."},
+{t:"FIRDAY",w:"Cuidado com a ordem: é FRI, não FIR."},
+{t:"FRIYAD",w:"O DAY vai no fim, nessa ordem: D-A-Y."},
+{t:"DAYFRI",w:"O DAY vai no FIM: FRIDAY."}]},
+{q:"Qual está escrita certinha?", o:[
+{t:"Wednesday",ok:1,w:"Perfeito: Wed·nes·day."},
+{t:"Wensday",w:"Faltaram letras: Wed-nes-day."},
+{t:"Wednsday",w:"Faltou o e do meio: Wed-NES-day."},
+{t:"Wendesday",w:"Começa com Wed: Wed-nes-day."}]},
+{q:"Que dia vem logo antes de Tuesday?", o:[
+{t:"Monday",ok:1,w:"Certo! Monday → Tuesday → Wednesday."},
+{t:"Wednesday",w:"Wednesday vem depois de Tuesday."},
+{t:"Thursday",w:"Thursday vem depois de Wednesday."},
+{t:"Friday",w:"Friday é o quinto dia, a partir de Monday."}]}
+]},
+{ id:'b9', emoji:'👦', titulo:'Estação 9 · Does he…?', cor:'#FFB703',
+html:`<p class="narrador">Coruja Fifi diz: "Nona parada: e quando a pergunta é sobre OUTRA pessoa, um menino? Aí o Do vira DOES!"</p>
+<table class="mini"><tr><th>Perguntando para VOCÊ</th><th>Perguntando sobre ELE</th></tr>
+<tr><td>${F('Do you…?')}</td><td>${F('Does he…?')}</td></tr>
+<tr><td>${F('Yes, I do.')}</td><td>${F('Yes, he does.')}</td></tr>
+<tr><td>${F('No, I don\'t.')}</td><td>${F('No, he doesn\'t.')}</td></tr></table>
+<p>No Workbook (p. 65), os desenhos mostram a semana de um menino:</p>${TAB_SEMANA}
+<div class="regra">${F('Does he read books on Mondays?')} → ${F('No, he doesn\'t.')} (na segunda ele toca drums)</div>
+<div class="regra azulado">${F('Does he ride his bike on Thursdays?')} → ${F('Yes, he does.')}</div>
+<div class="erro-prova">📝 <b>Na prova 2:</b> na figura da <b>Tuesday</b> o menino toca piano; então "Does he play video games on Tuesdays?" → <b>No, he doesn't.</b> Na figura da <b>Thursday</b> ele anda de bicicleta: "Does he ride his bike on Thursdays?" → <b>Yes, he does.</b> As duas saíram trocadas.</div>`,
+como:`<b>🧭 Como fazer</b> "Look at the pictures and answer Yes, he does or No, he doesn't":<ol><li>Leia o <b>dia</b> da pergunta (on Tuesdays = terça).</li><li>Olhe a figura <b>desse dia</b>: o que o menino está fazendo?</li><li>A pergunta fala a mesma coisa da figura? → <b>Yes, he does.</b> Fala outra coisa? → <b>No, he doesn't.</b></li><li>Copie a resposta igualzinha ao enunciado, com vírgula e ponto.</li></ol>`,
+qs:[
+{q:"Pela semana do menino: Does he read books on Saturdays?", o:[
+{t:"Yes, he does.",ok:1,w:"Isso! No Saturday ele lê livros."},
+{t:"No, he doesn't.",w:"Confira a tabela: no Saturday ele reads books."},
+{t:"Yes, I do.",w:"A pergunta é sobre ELE: Yes, he does."},
+{t:"Yes, he do.",w:"Com he usamos does."}]},
+{q:"Pela semana do menino: Does he play video games on Mondays?", o:[
+{t:"No, he doesn't.",ok:1,w:"Certo! Na Monday ele toca drums. Video games é na Wednesday."},
+{t:"Yes, he does.",w:"Na tabela, video games é na Wednesday."},
+{t:"No, I don't.",w:"A pergunta é sobre ele: No, he doesn't."},
+{t:"No, he don't.",w:"Com he o certo é doesn't."}]},
+{q:"Para perguntar sobre ELE e para perguntar a VOCÊ, usamos:", o:[
+{t:"Does he…? / Do you…?",ok:1,w:"Isso! he → does; you → do."},
+{t:"Do he…? / Does you…?",w:"Está trocado."},
+{t:"Does he…? / Does you…?",w:"Com you usamos Do."},
+{t:"Do he…? / Do you…?",w:"Com he usamos Does."}]}
+]},
+{ id:'b10', emoji:'🏆', titulo:'Estação 10 · Revisão geral', cor:'#8E6FC4',
+html:`<p class="narrador">Coruja Fifi diz: "Última estação antes do Mapa! Agora tudo vem misturado: casas, pronomes, Do/Does e dias. Você consegue!"</p>
+<div class="regra">🎫 Lembretes: <b>in the</b> lugar · <b>in a</b> moradia · She/He/It → <b>lives</b> · <b>Do you</b> → I do / I don't · <b>Does he</b> → he does / he doesn't · DAY no fim.</div>`,
+como:`<b>🧭 Antes de responder:</b> leia a pergunta inteira, ache <b>quem</b> é (you, he, she, it) e só depois escolha.`,
+qs:[
+{q:"This is the king. Where does he live?", o:[
+{t:"He lives in a castle.",ok:1,w:"Isso! Rei → He; castelo → in a castle."},
+{t:"She lives in a castle.",w:"Rei é homem: He."},
+{t:"He lives in the ocean.",w:"No oceano moram o peixe e o polvo."},
+{t:"He live castle.",w:"Faltaram o s (lives) e o in a."}]},
+{q:"Do you play the piano? (você toca)", o:[
+{t:"Yes, I do.",ok:1,w:"Certo! Pergunta para você, e você toca."},
+{t:"Yes, he does.",w:"A pergunta foi para você (you)."},
+{t:"No, I don't.",w:"Você toca, então é Yes."},
+{t:"Yes, I does.",w:"Com I usamos do."}]},
+{q:"Desembaralhe: YADNOM", o:[
+{t:"MONDAY",ok:1,w:"Isso! MON + DAY."},
+{t:"NOMDAY",w:"Leia ao contrário: M-O-N."},
+{t:"MONYAD",w:"O DAY vai no fim: D-A-Y."},
+{t:"DAYMON",w:"O DAY vai no FIM."}]}
+]}
+];
+
+const RAMOS = [
+{nome:'🏠 Casas e lugares', cor:'#D64045', nos:[
+'castle · trailer · house · boat · apartment',
+['caverna = ', {id:'L1',certa:'cave',errada:'drums'}],
+'ocean · desert · jungle · woods · city · country']},
+{nome:'🐾 Quem mora onde', cor:'#2A9D8F', nos:[
+['The octopus lives in the ', {id:'L2',certa:'ocean',errada:'Monday'}, '.'],
+'The spider lives in a cave · The king lives in a castle',
+'lugar → in the · moradia → in a']},
+{nome:'🗣️ Where do you live?', cor:'#3A86FF', nos:[
+['I live ', {id:'L3',certa:'in a',errada:'does'}, ' house.'],
+['She ', {id:'L4',certa:'lives',errada:'play'}, ' in a trailer.'],
+'He lives in an apartment.']},
+{nome:'🙋 Pronomes', cor:'#E0A100', nos:[
+['menina = ', {id:'L5',certa:'She',errada:'Friday'}],
+['Me? = ', {id:'L6',certa:'I',errada:'boat'}],
+'menino/homem/rei = He · animal/coisa = It']},
+{nome:'🔤 Sons da Unit 7', cor:'#8E6FC4', nos:[
+['torta = p', {id:'L7',certa:'ie',errada:'oa'}],
+'sky · fly · my (y) · high (igh)']},
+{nome:'🛶 Sons da Unit 8', cor:'#1F8FB8', nos:[
+['barco = b', {id:'L8',certa:'oa',errada:'ie'}, 't'],
+'row · low · yellow (ow)']},
+{nome:'🎺 Instrumentos', cor:'#C0392B', nos:[
+'recorder · trumpet · drums · violin · tambourine',
+['Tem teclas pretas e brancas: ', {id:'L9',certa:'piano',errada:'house'}]]},
+{nome:'🙋 Do you…?', cor:'#27AE60', nos:[
+['Do you play the drums? Yes, I ', {id:'L10',certa:'do',errada:'he'}, '.'],
+'No, I don\'t. · play the piano · play soccer']},
+{nome:'📅 Days of the week', cor:'#D68910', nos:[
+'Monday · Tuesday · Wednesday · Thursday · Friday · Saturday · Sunday',
+['Depois de Tuesday vem ', {id:'L11',certa:'Wednesday',errada:'woods'}],
+'YADNOM → MONDAY (DAY no fim)']},
+{nome:'👦 Does he…?', cor:'#9B59B6', nos:[
+['Does he ride his bike on Thursdays? Yes, he ', {id:'L12',certa:'does',errada:'do'}, '.'],
+'No, he doesn\'t. · does = d·o·e·s']}
+];
+
+const VF = [
+{f:'The octopus lives in the ocean.', v:1, e:'Verdadeiro. O polvo mora no oceano.', a:'The octopus lives in the ocean.'},
+{f:'The spider lives in the desert.', v:0, e:'Falso. Na prova: The spider lives in a cave (caverna). No deserto mora a iguana.', a:'The spider lives in a cave.'},
+{f:'castle quer dizer caverna.', v:0, e:'Falso. castle = castelo; caverna é cave.', a:'castle'},
+{f:'trailer é uma casa que anda.', v:1, e:'Verdadeiro. trailer é a casa que anda.', a:'trailer'},
+{f:'Para uma menina usamos he.', v:0, e:'Falso. Menina → She. He é para menino ou homem.', a:'She'},
+{f:'Para um animal ou coisa usamos it.', v:1, e:'Verdadeiro. This is a spider. It lives in a cave.', a:'It lives in a cave.'},
+{f:'Com he e she o verbo vira lives, com s.', v:1, e:'Verdadeiro. She lives in a house. He lives in a castle.', a:'She lives in a house.'},
+{f:'"I live house" é uma resposta completa para "Where do you live?".', v:0, e:'Falso. Faltou o in a: I live in a house.', a:'I live in a house.'},
+{f:'Dizemos "in an apartment".', v:1, e:'Verdadeiro. He lives in an apartment.', a:'He lives in an apartment.'},
+{f:'pie (torta) se escreve com IE.', v:1, e:'Verdadeiro. p + ie = pie.', a:'pie'},
+{f:'sky se escreve com IE.', v:0, e:'Falso. sky é com y, como fly e my.', a:'sky'},
+{f:'boat, coat e goat têm oa.', v:1, e:'Verdadeiro. As três têm oa.', a:'boat, coat, goat'},
+{f:'yellow termina com oa.', v:0, e:'Falso. yellow termina com ow, como row e low.', a:'yellow'},
+{f:'O piano tem teclas pretas e brancas (black and white keys).', v:1, e:'Verdadeiro. Foi a pista da prova 2.', a:'It has black and white keys.'},
+{f:'tambourine quer dizer bateria.', v:0, e:'Falso. tambourine = pandeiro; bateria é drums.', a:'tambourine'},
+{f:'Depois de Tuesday vem Wednesday.', v:1, e:'Verdadeiro. Monday, Tuesday, Wednesday…', a:'Tuesday, Wednesday'},
+{f:'YADIRF desembaralhado é FRIDAY.', v:1, e:'Verdadeiro. FRI + DAY.', a:'Friday'},
+{f:'YADNOM desembaralhado é NOMDAY.', v:0, e:'Falso. É MONDAY: lendo de trás para frente, M-O-N-D-A-Y.', a:'Monday'},
+{f:'Os dias da semana em inglês começam com letra maiúscula.', v:1, e:'Verdadeiro. Monday, Friday, Sunday…', a:'Monday'},
+{f:'"Do you play the trumpet?" se responde com "Yes, he does."', v:0, e:'Falso. Pergunta para você: Yes, I do. ou No, I don\'t.', a:'Yes, I do.'},
+{f:'Na semana do menino, ele toca violin na Friday. Então: "Does he play the violin on Fridays?" → "Yes, he does."', v:1, e:'Verdadeiro. Na Friday ele toca violino.', a:'Yes, he does.'},
+{f:'Na semana do menino, ele joga video games na Tuesday.', v:0, e:'Falso. Na Tuesday ele toca piano; video games é na Wednesday.', a:'He plays the piano on Tuesdays.'},
+{f:'Dizemos play the piano, mas play soccer (sem the).', v:1, e:'Verdadeiro. Instrumento com the; jogo e esporte sem the.', a:'play the piano, play soccer'},
+{f:'"No, I doesn\'t." está certo.', v:0, e:'Falso. Com I é No, I don\'t. O doesn\'t é para he: No, he doesn\'t.', a:'No, I don\'t.'},
+{f:'The bear lives in the woods.', v:1, e:'Verdadeiro. O urso mora no bosque.', a:'The bear lives in the woods.'}
+];
+
+const RELAMPAGO = [
+['Como se diz "caverna"?','cave 🕳️'],
+['"Where does she live?" (trailer 🚐)','She lives in a trailer.'],
+['"Where do you live?" (casa 🏠)','I live in a house.'],
+['Pronome para "This is Dina."','She'],
+['Pronome para "Me?"','I'],
+['Torta: P + __','IE → pie'],
+['YADIRF','FRIDAY'],
+['"___ play the drums? Yes, ___."','Do you … I do.'],
+['Pela semana do menino: "Does he play video games on Tuesdays?"','No, he doesn\'t. (Tuesday = piano)'],
+['Black and white keys','piano 🎹']
+];
+
+const VOCAB = [
+['castle','castelo','🏰'],['trailer','casa que anda','🚐'],['cave','caverna','🕳️'],['house','casa','🏠'],['boat','barco','⛵'],['apartment','apartamento','🏢'],
+['ocean','oceano','🌊'],['desert','deserto','🏜️'],['jungle','selva','🌴'],['woods','bosque','🌲'],['city','cidade','🏙️'],['country','campo','🌾'],
+['recorder','flauta doce','🎶'],['trumpet','trompete','🎺'],['drums','bateria','🥁'],['piano','piano','🎹'],['violin','violino','🎻'],['tambourine','pandeiro','🔔'],
+['live / lives','morar / mora','🏡'],['Where?','Onde?','❓'],['spider','aranha','🕷️'],['octopus','polvo','🐙'],['king','rei','🤴'],['grandma','vovó','👵']
+];
+
+// ===== SIMULADO (25 questões inéditas, no formato das provas) =====
+const SIM = [
+{q:'Read and complete with I / you / he / she / it:<br><b>This is my grandma. ___ lives in a house.</b>', fala:'This is my grandma. She lives in a house.', o:[
+{t:'She',ok:1,w:'Avó é mulher → She.'},{t:'He',w:'He é para homem ou menino.'},{t:'It',w:'It é para animal ou coisa.'},{t:'You',w:'You é para a pessoa com quem você fala.'}]},
+{q:'Read and complete:<br><b>Look! A bear. ___ lives in the woods.</b>', fala:'Look! A bear. It lives in the woods.', o:[
+{t:'It',ok:1,w:'Animal → It.'},{t:'I',w:'I é eu, e o verbo seria live.'},{t:'She',w:'No livro e na prova, para animal usamos It.'},{t:'You',w:'You leva live, sem s.'}]},
+{q:'Read and complete:<br><b>Me? ___ live in the country.</b>', fala:'Me? I live in the country.', o:[
+{t:'I',ok:1,w:'"Me?" = eu? → I live.'},{t:'He',w:'He levaria lives.'},{t:'It',w:'It é para animal ou coisa.'},{t:'She',w:'She levaria lives.'}]},
+{q:'Read and complete:<br><b>Hi, Sam! Where do ___ live?</b>', fala:'Hi, Sam! Where do you live?', o:[
+{t:'you',ok:1,w:'Falando COM o Sam → you.'},{t:'he',w:'Com he a pergunta seria "Where does he live?".'},{t:'it',w:'It é para animal ou coisa.'},{t:'she',w:'Sam é menino, e a pergunta é PARA ele: you.'}]},
+{q:'This is Sam 🏢. <b>Where does he live?</b>', fala:'He lives in an apartment.', o:[
+{t:'He lives in an apartment.',ok:1,w:'Pergunta sobre ele → He lives + in an apartment.'},{t:'He live in apartment.',w:'Faltaram o s (lives) e o an.'},{t:'She lives in an apartment.',w:'Sam é menino: He.'},{t:'I live in an apartment.',w:'A pergunta é sobre ele, não sobre você.'}]},
+{q:'🐙 <b>Where does the octopus live?</b>', fala:'It lives in the ocean.', o:[
+{t:'It lives in the ocean.',ok:1,w:'Animal → It; oceano → in the ocean.'},{t:'It lives in the desert.',w:'No deserto mora a iguana.'},{t:'He lives in a castle.',w:'No castelo mora o rei.'},{t:'It live ocean.',w:'Faltaram o s e o in the.'}]},
+{q:'<b>Where do you live?</b> (você mora numa casa 🏠)', fala:'I live in a house.', o:[
+{t:'I live in a house.',ok:1,w:'Os 3 pedaços: I live + in a + house.'},{t:'I live house.',w:'Faltou o in a.'},{t:'I lives in a house.',w:'Com I, sem s: live.'},{t:'You live in a house.',w:'Quem responde é você: I live.'}]},
+{q:'Look at the picture 🚐👨‍👩‍👧. <b>She lives in a ___.</b>', fala:'She lives in a trailer.', o:[
+{t:'trailer',ok:1,w:'A casa que anda é o trailer.'},{t:'castle',w:'castle é castelo.'},{t:'cave',w:'cave é caverna.'},{t:'boat',w:'boat é barco.'}]},
+{q:'Connect: <b>The iguana lives…</b>', fala:'The iguana lives in the desert.', o:[
+{t:'in the desert.',ok:1,w:'A iguana mora no deserto.'},{t:'in the ocean.',w:'No oceano moram o peixe e o polvo.'},{t:'in a house.',w:'Na casa mora a vovó.'},{t:'in the city.',w:'Na cidade mora o pássaro.'}]},
+{q:'Connect: <b>The monkey lives…</b>', fala:'The monkey lives in the jungle.', o:[
+{t:'in the jungle.',ok:1,w:'O macaco mora na selva.'},{t:'in a cave.',w:'Na caverna mora a aranha.'},{t:'in the country.',w:'No campo mora a vaca.'},{t:'in a castle.',w:'No castelo mora o rei.'}]},
+{q:'Complete using <b>Y</b> or <b>IE</b>:<br>☁️ <b>sk__</b> (céu)', fala:'sky', o:[
+{t:'Y → sky',ok:1,w:'sky, como fly e my.'},{t:'IE → skie',w:'Céu é sky, com y.'}]},
+{q:'Complete using <b>Y</b> or <b>IE</b>:<br>🥧 <b>apple p__</b> (torta de maçã)', fala:'apple pie', o:[
+{t:'IE → pie',ok:1,w:'p + ie = pie.'},{t:'Y → py',w:'Torta é pie, com ie.'}]},
+{q:'Pick the correct word for the picture: 🏰', fala:'castle', o:[
+{t:'castle',ok:1,w:'🏰 = castle (castelo).'},{t:'cave',w:'cave é caverna.'},{t:'country',w:'country é campo.'}]},
+{q:'Look and circle: 🐄 <b>The cow lives in the ocean / country.</b>', fala:'The cow lives in the country.', o:[
+{t:'country',ok:1,w:'A vaca mora no campo (country).'},{t:'ocean',w:'No oceano moram o peixe e o polvo.'}]},
+{q:'Read and complete:<br><b>I play the d r _ _ s on Mondays.</b> 🥁', fala:'I play the drums on Mondays.', o:[
+{t:'u m → drums',ok:1,w:'d·r·U·M·s.'},{t:'m u → drmus',w:'A ordem é u depois m: drums.'},{t:'o u → drous',w:'Bateria é drums.'},{t:'a m → drams',w:'O certo é drUms.'}]},
+{q:'Read and complete:<br><b>I play the r e c _ r d e r on Fridays.</b> 🎶', fala:'I play the recorder on Fridays.', o:[
+{t:'o → recorder',ok:1,w:'r·e·c·O·r·d·e·r.'},{t:'a → recarder',w:'O certo é recOrder.'},{t:'u → recurder',w:'O certo é recOrder.'},{t:'e → recerder',w:'O certo é recOrder.'}]},
+{tipo:'tiles', q:'Unscramble the word (clique nas letras na ordem certa):', letras:'YADSEUT', resp:'TUESDAY', fala:'Tuesday', exp:'Ache o DAY e coloque no fim. Sobram T, U, E, S → TUES + DAY = TUESDAY.'},
+{tipo:'tiles', q:'Unscramble the word:', letras:'YADRUTAS', resp:'SATURDAY', fala:'Saturday', exp:'Ache o DAY. Sobram S, A, T, U, R → SATUR + DAY = SATURDAY.'},
+{tipo:'tiles', q:'Unscramble the word:', letras:'YADSRUHT', resp:'THURSDAY', fala:'Thursday', exp:'Ache o DAY. Sobram T, H, U, R, S → THURS + DAY = THURSDAY.'},
+{q:'Qual está escrita certinha?', fala:'Wednesday', o:[
+{t:'Wednesday',ok:1,w:'Wed·nes·day.'},{t:'Wensday',w:'Faltaram letras.'},{t:'Wednsday',w:'Faltou o e do meio: Wed-NES-day.'},{t:'Wendesday',w:'Começa com Wed.'}]},
+{q:'Answer <b>Yes, I do</b> or <b>No, I don\'t</b>:<br><b>Do you play the recorder?</b> (você toca ✅)', fala:'Yes, I do.', o:[
+{t:'Yes, I do.',ok:1,w:'Pergunta para você, e você toca.'},{t:'Yes, he does.',w:'A pergunta foi para você (you).'},{t:'No, I don\'t.',w:'Você toca, então é Yes.'},{t:'Yes, I does.',w:'Com I usamos do.'}]},
+{q:'Complete the sentence:<br><b>___ play the piano? Yes, I do.</b>', fala:'Do you play the piano? Yes, I do.', o:[
+{t:'Do you',ok:1,w:'A resposta "I do" mostra que a pergunta foi para você.'},{t:'Does he',w:'Com Does he, a resposta seria "he does".'},{t:'You do',w:'Na pergunta, o Do vem primeiro.'},{t:'Does you',w:'Com you usamos Do.'}]},
+{q:'Look at the boy\'s week (🎨 Sunday = paints).<br><b>Does he paint on Sundays?</b>', fala:'Yes, he does.', o:[
+{t:'Yes, he does.',ok:1,w:'No Sunday ele pinta.'},{t:'No, he doesn\'t.',w:'Na figura do Sunday ele está pintando.'},{t:'Yes, I do.',w:'A pergunta é sobre ele.'},{t:'Yes, he do.',w:'Com he usamos does.'}]},
+{q:'Look at the boy\'s week (🎻 Friday = plays the violin).<br><b>Does he play the drums on Fridays?</b>', fala:'No, he doesn\'t.', o:[
+{t:'No, he doesn\'t.',ok:1,w:'Na Friday ele toca violino, não bateria.'},{t:'Yes, he does.',w:'A figura da Friday mostra o violino.'},{t:'No, I don\'t.',w:'A pergunta é sobre ele.'},{t:'No, he don\'t.',w:'Com he o certo é doesn\'t.'}]},
+{q:'Pick the correct option: 🎻<br><b>I can play the ___.</b>', fala:'I can play the violin.', o:[
+{t:'violin',ok:1,w:'🎻 = violin.'},{t:'trumpet',w:'trumpet é trompete 🎺.'},{t:'tambourine',w:'tambourine é pandeiro 🔔.'}]}
+];
+
+// ===== COMO FAZER (para a criança e para a mãe) =====
+const COMO_P1 = [
+['🎧 1. Listen and number (ouvir e numerar)', 'Ouça o nome do animal. Procure a figura dele. Escreva o número no quadrinho. Se não entender, espere o áudio repetir.', 'É questão de áudio: treine falando em voz alta as palavras das Estações 1 e 2 (fish, iguana, monkey, bear, bird, cow) e peça para a criança apontar a figura. Na prova, essa questão foi bem!'],
+['🔗 2. Look and read. Then connect (ligar)', 'Leia quem é (The spider = a aranha). Pense onde mora. Ligue com uma linha só. No fim, confira se cada frase da direita tem só uma linha.', 'Leia a frase em português e peça para ela dizer onde o animal mora em inglês. Essa questão foi bem na prova.'],
+['🚐 3. Where does she live? Answer', 'Pergunta com <b>she</b> → resposta começa com <b>She lives</b>. Olhe a figura (trailer) → <b>in a trailer</b>. Ponto final.', 'Mostre uma figura (casa, castelo, trailer) e pergunte "Where does she live?". A resposta tem que vir completa: She lives in a ___. Na prova, ficou errada.'],
+['🙋 4. Complete with I / you / he / she / it', 'Descubra quem é: menina → She · menino/homem/rei → He · animal/coisa → It · "Me?" → I · pergunta PARA alguém → you. Confira o verbo: lives → he/she/it; live → I/you.', 'Foi a questão com mais erros da prova 1 (4 de 5). Jogue de "quem é?": diga "a vovó", "o rei", "o gato", "eu" e ela responde o pronome.'],
+['🥧 5. Complete using Y or IE', 'Fale a palavra da figura (torta = pie). sky/fly/my → Y · pie → IE. Escreva só as letras que faltam.', 'Escreva no papel P__ e SK__ e peça para completar. Na prova, ficou errada.'],
+['⛵ 6. Pick the correct word', 'Diga em português o que é a figura e procure a palavra em inglês.', 'Foi bem na prova.'],
+['🏠 7. Where do you live? I live in a/an…', 'Pergunta com <b>you</b> → <b>I live</b>. Depois <b>in a</b> (ou <b>in an apartment</b>) e a moradia. Três pedaços: I live + in a + house.', 'Na prova saiu "I live house" (faltou o in a) e valeu metade. Peça para ela falar a frase inteira 3 vezes.'],
+['⭕ 8. Look and circle', 'Leia a frase com cada opção e circule a que faz sentido (It lives in the ocean).', 'Foi bem na prova.']
+];
+const COMO_P2 = [
+['🎧 1. Listen and check (ouvir e marcar)', 'Ouça o nome do instrumento e marque o quadrinho da figura certa. Só marque depois de ouvir.', 'É questão de áudio: aperte o 🔊 da Estação 6 e peça para ela apontar a figura. Nesta questão houve vários erros, então vale treinar o som das 6 palavras.'],
+['✏️ 2. Read and complete (letras)', 'Conte os tracinhos, fale a palavra devagar e escreva uma letra por tracinho. Wed·nes·day!', 'Dite as palavras soletrando. Trumpet e violin foram certas; Wednesday ficou errada.'],
+['🙋 3. Answer Yes, I do or No, I don\'t', 'É a sua resposta: toca → Yes, I do. Não toca → No, I don\'t. Copie com vírgula e ponto.', 'Foi bem na prova. Peça para ela caprichar nas maiúsculas e na vírgula.'],
+['🧩 4. Complete the sentences (dois buracos)', '1º buraco = começo da pergunta: Do you. 2º buraco = resposta curta: I do. Nunca deixe em branco!', 'Ficou em branco na prova. Diga "Do you play the drums?" e peça para ela responder "Yes, I do." Depois inverta: você responde e ela pergunta.'],
+['🥁 5. Pick the correct option', 'Olhe a figura e circule o nome do instrumento.', 'Foi bem na prova.'],
+['🔀 6. Unscramble the words', 'Ache D, A, Y e coloque no fim. Com o resto, monte o começo do dia (MON, FRI, SUN). Risque as letras usadas.', 'Ela acertou o DAY mas inverteu o começo (NOM, FIR). Escreva as letras em papeizinhos e deixe ela montar.'],
+['🎹 7. Write the name of the instrument', 'Ache a palavra-chave da pista (keys = teclas → piano).', 'Foi bem na prova.'],
+['👦 8. Yes, he does / No, he doesn\'t (pelas figuras)', 'Leia o dia, olhe a figura desse dia, compare com a pergunta. Igual → Yes, he does. Diferente → No, he doesn\'t.', 'As duas ficaram trocadas na prova. Use a tabela da semana do menino (Estação 9): você pergunta e ela responde olhando o dia.']
+];
+const ANALISE = [
+['Prova 1 · nota 5,6', [
+['1','Listen and number (animais)','áudio','ok'],
+['2','Connect: quem mora onde','ligar','ok'],
+['3','Where does she live? (trailer)','escrever','no','Resposta certa: She lives in a trailer.'],
+['4','I / you / he / she / it','completar','no','Errou Dina (She), King (He), Me? (I) e Where do ___ live? (you). Acertou spider (It).'],
+['5','Y ou IE: P__ (torta)','completar','no','Resposta certa: PIE.'],
+['6','Pick the correct word (boat)','escolher','ok'],
+['7','Where do you live? I live in a/an…','escrever','meio','Escreveu "I live house": faltou o in a.'],
+['8','Look and circle (ocean)','circular','ok']]],
+['Prova 2 · nota 5,0', [
+['1','Listen and check (instrumentos)','áudio','no','Vários errados. É de áudio: treinar o som das palavras.'],
+['2','Read and complete: trumpet, Wednesday, violin','letras','meio','Wednesday errada.'],
+['3','Yes, I do / No, I don\'t','escrever','ok'],
+['4','___ play the drums? Yes, ___','completar','no','Ficou em branco. Certo: Do you … I do.'],
+['5','Pick the correct option (drums, trumpet)','escolher','ok'],
+['6','Unscramble: MONDAY, FRIDAY, SUNDAY','desembaralhar','meio','Errou MONDAY e FRIDAY (escreveu NOM DAY, FIR DAY). Acertou SUNDAY.'],
+['7','Black and white keys = piano','escrever','ok'],
+['8','Yes, he does / No, he doesn\'t (figuras)','escrever','no','As duas trocadas. Certo: No, he doesn\'t (Tuesday) · Yes, he does (Thursday).']]]
+];
+// ===================== LÓGICA =====================
+const SLUG = 'piui_rev78';
+const K = { leitura:SLUG+'_leitura_v1', mapa:SLUG+'_mapa_v1', vf:SLUG+'_vf_v1', resumo:SLUG+'_resumo_v1', simulado:SLUG+'_sim_v1', trilha:SLUG+'_trilha_v1' };
+const MEM = {};
+function lerChave(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return MEM[k]?JSON.parse(MEM[k]):null; } }
+function gravarChave(k,o){ const s=JSON.stringify(o); try{ localStorage.setItem(k,s); }catch(e){ MEM[k]=s; } }
+function apagarChave(k){ try{ localStorage.removeItem(k); }catch(e){} delete MEM[k]; }
+let S = {};
+function carregar(){ for(const n in K){ S[n] = lerChave(K[n]) || {}; } }
+function salvar(n){ S[n].quando = new Date().toISOString(); gravarChave(K[n], S[n]); painel(); }
+function painel(){ const el=document.getElementById('painelSalvar'); let ult=''; for(const n in K){ if(S[n]&&S[n].quando&&S[n].quando>ult) ult=S[n].quando; } if(el) el.textContent = ult ? '💾 Salvo automaticamente em '+new Date(ult).toLocaleString('pt-BR')+'.' : 'Seu progresso é salvo sozinho neste aparelho.'; }
+function concluir(n){ if(!S[n].concluido){ S[n].concluido=true; S[n].concluidoEm=new Date().toISOString(); S[n]._novoProx=true; } salvar(n); montarAbas(); montarTrilha(); }
+
+// ---------- áudio ----------
+function falar(t){ try{ if(!('speechSynthesis' in window)) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=1; speechSynthesis.speak(u); }catch(e){} }
+try{ if('speechSynthesis' in window) speechSynthesis.getVoices(); }catch(e){}
+document.addEventListener('click', e=>{ const b=e.target.closest('button.som'); if(b){ e.stopPropagation(); falar(b.dataset.fala); } }, true);
+
+// ---------- embaralhar (mulberry32, semente fixa) ----------
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function semente(str){ let h=5381; for(let i=0;i<str.length;i++) h=((h*33)+str.charCodeAt(i))>>>0; return h; }
+function embaralhar(arr, seed){ const r=mulberry32(seed), a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const LETRAS = ['a','b','c','d'];
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ---------- modal ----------
+function modal(html, botoes){ const m=document.getElementById('modal'); m.innerHTML=html+'<div style="margin-top:14px" id="modalBts"></div>'; const bx=m.querySelector('#modalBts'); (botoes||[{t:'OK'}]).forEach(b=>{ const x=document.createElement('button'); x.className='btn '+(b.c||''); x.textContent=b.t; x.onclick=()=>{ fecharModal(); if(b.f) b.f(); }; bx.appendChild(x); }); document.getElementById('fundoModal').classList.add('aberto'); }
+function fecharModal(){ document.getElementById('fundoModal').classList.remove('aberto'); }
+
+// ---------- trilha ----------
+const TOTAL_LEIT = BLOCOS.reduce((s,b)=>s+b.qs.length,0);
+const PECAS = []; RAMOS.forEach(r=>r.nos.forEach(n=>{ if(Array.isArray(n)) n.forEach(p=>{ if(typeof p==='object') PECAS.push(p); }); }));
+function respondidasLeit(){ return Object.keys((S.leitura.resp)||{}).length; }
+function pecasFeitas(){ return PECAS.filter(p=>S.mapa.pecas&&S.mapa.pecas[p.id]&&S.mapa.pecas[p.id].feita).length; }
+const ETAPAS = [
+ {id:'leitura', nome:'📖 Estações (Leitura Guiada)', ic:'📖', falta:()=>''},
+ {id:'mapa', nome:'🧠 Mapa da Ferrovia', ic:'🧠', falta:()=>`Destrava quando você responder às ${TOTAL_LEIT} perguntas das Estações (faltam ${TOTAL_LEIT-respondidasLeit()}).`},
+ {id:'vf', nome:'🚦 Sinal Verde ou Vermelho', ic:'🚦', falta:()=>`Destrava quando você encaixar as ${PECAS.length} peças do Mapa (faltam ${PECAS.length-pecasFeitas()}).`},
+ {id:'resumo', nome:'🗺️ Painel da Estação (Resumo)', ic:'🗺️', falta:()=>'Destrava quando você jogar uma rodada completa do Sinal Verde ou Vermelho (12 frases).'},
+ {id:'simulado', nome:'📝 Grande Viagem (Simulado)', ic:'📝', falta:()=>'Destrava quando você clicar em "✅ Li o resumo até o fim" no Resumo.'}
+];
+function liberadoPais(){ return !!(S.trilha && S.trilha.liberadoPelosPais); }
+function aberta(i){ if(i===0 || liberadoPais()) return true; return !!(S[ETAPAS[i-1].id] && S[ETAPAS[i-1].id].concluido); }
+function idxEtapa(id){ return ETAPAS.findIndex(e=>e.id===id); }
+function abaAberta(id){ const i=idxEtapa(id); return i<0 ? true : aberta(i); }
+function ehNova(i){ return i>0 && aberta(i) && !S[ETAPAS[i].id].concluido && S[ETAPAS[i-1].id] && S[ETAPAS[i-1].id]._novoProx && !liberadoPais(); }
+
+const TODAS = [{id:'inicio', nome:'🏠 Início'},{id:'como', nome:'🧭 Como fazer'}].concat(ETAPAS.map(e=>({id:e.id, nome:e.nome.split(' (')[0]})));
+let abaAtual = 'inicio';
+function montarAbas(){
+ const nav=document.getElementById('abas'); nav.innerHTML='';
+ TODAS.forEach(a=>{ const i=idxEtapa(a.id); const b=document.createElement('button'); const ab=abaAberta(a.id);
+  b.innerHTML=(ab?'':'🔒 ')+a.nome+(i>=0&&S[a.id].concluido?' <span class="selo">✅</span>':(i>=0&&ehNova(i)?' <span class="selo">✨ Novo</span>':''));
+  if(!ab) b.classList.add('trancada'); if(a.id===abaAtual) b.classList.add('ativa');
+  b.onclick=()=>irPara(a.id); nav.appendChild(b); });
+ document.querySelectorAll('[data-proximo]').forEach(b=>{ const id=b.dataset.proximo; b.disabled=!abaAberta(id); });
+}
+function irPara(id){
+ if(!abaAberta(id)){ const e=ETAPAS[idxEtapa(id)]; modal(`<div class="trofeu">🔒</div><h3>Esta estação ainda está trancada</h3><p>${e.falta()}</p>`); return; }
+ abaAtual=id; document.querySelectorAll('section.aba').forEach(s=>s.classList.remove('ativa'));
+ document.getElementById('sec-'+id).classList.add('ativa');
+ const i=idxEtapa(id); if(i>0 && S[ETAPAS[i-1].id]._novoProx){ S[ETAPAS[i-1].id]._novoProx=false; gravarChave(K[ETAPAS[i-1].id],S[ETAPAS[i-1].id]); }
+ montarAbas(); montarTrilha(); window.scrollTo({top:0});
+ if(id==='resumo') checarRolagem();
+}
+function montarTrilha(){
+ const c=document.getElementById('trilhaCards'); c.innerHTML='';
+ if(liberadoPais()){ const d=document.createElement('div'); d.innerHTML='<span class="tag novo">🔓 Trilha liberada pelos pais</span>'; c.appendChild(d); }
+ ETAPAS.forEach((e,i)=>{ const ab=aberta(i), feita=!!S[e.id].concluido; const b=document.createElement('button'); b.className='etapa'+(ab?'':' trancada')+(feita?' feita':'')+(ehNova(i)?' nova':'');
+  b.innerHTML=`<span class="ic">${ab?e.ic:'🔒'}</span><span><b>${i+1}. ${e.nome}</b>${feita?'<span class="tag ok">✅ Concluído</span>':(ehNova(i)?'<span class="tag novo">✨ Novo destravado</span>':(ab?'':'<span class="tag lock">trancado</span>'))}<br><span class="sub">${ab?(feita?'Pode revisar quando quiser.':'Aberto: pode começar!'):e.falta()}</span></span>`;
+  b.onclick=()=>irPara(e.id); c.appendChild(b); });
+}
+document.querySelectorAll('[data-proximo]').forEach(b=>b.addEventListener('click',()=>irPara(b.dataset.proximo)));
+
+// ---------- COMO FAZER ----------
+function montarComo(){
+ const f = lista => lista.map(([t,cri,mae])=>`<details class="tipo"><summary>${t}</summary><div class="paraquem"><div class="cri">👧 <b>Para a criança:</b> ${cri}</div><div class="mae">👩 <b>Para a mãe ou o pai:</b> ${mae}</div></div></details>`).join('');
+ document.getElementById('comoP1').innerHTML=f(COMO_P1);
+ document.getElementById('comoP2').innerHTML=f(COMO_P2);
+ const st={ok:['st-ok','✅ certo'],no:['st-no','❌ errou'],meio:['st-meio','🟠 parcial'],};
+ document.getElementById('analiseProvas').innerHTML = ANALISE.map(([tit,linhas])=>`<h4>${tit}</h4><table class="analise"><tr><th>Q</th><th>O que caiu</th><th>Formato</th><th>Resultado</th></tr>`+linhas.map(l=>`<tr><td>${l[0]}</td><td>${l[1]}${l[4]?'<br><span class="sub">'+l[4]+'</span>':''}</td><td>${l[2]}</td><td class="${st[l[3]][0]}">${st[l[3]][1]}</td></tr>`).join('')+'</table>').join('')+
+ '<div class="caixa" style="margin-top:10px">🎯 <b>Onde focar:</b> 1) pronomes I/you/he/she/it · 2) respostas completas (She lives in a trailer · I live in a house) · 3) Do you…? / Does he…? com as respostas curtas · 4) desembaralhar dias com o truque do DAY · 5) ortografia de Wednesday e pie.</div>';
+}
+
+// ---------- LEITURA ----------
+function montarLeitura(){
+ const c=document.getElementById('blocosLeitura'); c.innerHTML='';
+ S.leitura.resp = S.leitura.resp || {};
+ BLOCOS.forEach((b,bi)=>{
+  const d=document.createElement('div'); d.className='card bloco'; d.id='bl_'+b.id; d.style.setProperty('--c',b.cor);
+  let qh=''; b.qs.forEach((q,qi)=>{ const key=b.id+'_'+qi; const ordem=embaralhar(q.o.map((o,oi)=>oi), semente(key));
+   qh+=`<div class="pergunta" id="pq_${key}"><b>${qi+1}) ${q.q}</b><div class="opcoes">`+ordem.map((oi,pos)=>`<button class="op" data-k="${key}" data-oi="${oi}">${LETRAS[pos]}) ${esc(q.o[oi].t)}</button>`).join('')+`</div><div id="fb_${key}"></div></div>`; });
+  d.innerHTML=`<div class="cab"><h3 style="margin:0;color:${b.cor}">${b.emoji} ${b.titulo}</h3><span class="estado"></span></div><div class="corpo">${b.html}<div class="como">${b.como}</div><p><b>Responda às 3 para abrir a próxima estação:</b></p>${qh}</div>`;
+  d.querySelector('.cab').onclick=()=>{ if(!d.classList.contains('trancado')) d.classList.toggle('fechado'); };
+  c.appendChild(d);
+ });
+ c.querySelectorAll('.op').forEach(b=>b.onclick=()=>responderLeit(b.dataset.k, +b.dataset.oi));
+ atualizarLeitura(true);
+}
+function blocoFeito(bi){ const b=BLOCOS[bi]; return b.qs.every((q,qi)=>S.leitura.resp[b.id+'_'+qi]); }
+function responderLeit(key, oi){
+ if(S.leitura.resp[key]) return;
+ const [bid,qi]=key.split('_'); const b=BLOCOS.find(x=>x.id===bid); const q=b.qs[+qi];
+ S.leitura.resp[key]={esc:oi, ok:!!q.o[oi].ok, quando:new Date().toISOString()};
+ salvar('leitura'); atualizarLeitura(false);
+ if(respondidasLeit()>=TOTAL_LEIT && !S.leitura.concluido){ concluir('leitura'); modal('<div class="trofeu">🎫</div><h3>Todas as estações feitas!</h3><p>O <b>Mapa da Ferrovia</b> foi destravado.</p>',[{t:'Ir para o Mapa 🧠',f:()=>irPara('mapa')},{t:'Ficar aqui',c:'claro'}]); }
+}
+function atualizarLeitura(inicial){
+ BLOCOS.forEach((b,bi)=>{
+  const d=document.getElementById('bl_'+b.id); const lib = bi===0 || blocoFeito(bi-1);
+  d.classList.toggle('trancado',!lib); if(!lib) d.classList.add('fechado'); else if(inicial) d.classList.toggle('fechado', blocoFeito(bi) && bi<BLOCOS.length-1 && blocoFeito(bi+1)); else if(lib && !blocoFeito(bi)) d.classList.remove('fechado');
+  d.querySelector('.estado').textContent = !lib?'🔒':(blocoFeito(bi)?'🎫 feito':'▼');
+  b.qs.forEach((q,qi)=>{ const key=b.id+'_'+qi, r=S.leitura.resp[key]; if(!r) return;
+   document.querySelectorAll(`#pq_${key} .op`).forEach(x=>{ x.disabled=true; const oi=+x.dataset.oi; if(q.o[oi].ok) x.classList.add('certa'); else if(oi===r.esc) x.classList.add('errada'); });
+   const certa=q.o.find(o=>o.ok);
+   document.getElementById('fb_'+key).innerHTML = r.ok ? `<div class="fb ok">✅ ${esc(q.o[r.esc].w)}</div>` : `<div class="fb no">💛 Quase! ${esc(q.o[r.esc].w)}<br>✔️ Resposta certa: <b>${esc(certa.t)}</b>. ${esc(certa.w)}</div>`;
+  });
+ });
+ const n=respondidasLeit(), ac=Object.values(S.leitura.resp).filter(r=>r.ok).length;
+ document.getElementById('barraLeitura').style.width=(100*n/TOTAL_LEIT)+'%';
+ document.getElementById('txtLeitura').textContent=`🎫 ${BLOCOS.filter((b,i)=>blocoFeito(i)).length} de ${BLOCOS.length} estações · ${n} de ${TOTAL_LEIT} perguntas respondidas · ⭐ ${ac} acertos`;
+ document.getElementById('fimLeitura').style.display = n>=TOTAL_LEIT ? '' : 'none';
+}
+
+// ---------- MAPA ----------
+function montarMapa(){
+ S.mapa.pecas = S.mapa.pecas || {};
+ const c=document.getElementById('ramosMapa'); c.innerHTML='';
+ RAMOS.forEach(r=>{ const d=document.createElement('div'); d.className='ramo'; d.style.setProperty('--c',r.cor);
+  d.innerHTML=`<h4>${r.nome}</h4>`+r.nos.map(n=>{ if(typeof n==='string') return `<div class="no">• ${esc(n)}</div>`;
+   return '<div class="no">• '+n.map(p=>{ if(typeof p==='string') return esc(p); const ops=embaralhar([p.certa,p.errada], semente(p.id));
+    return `<span class="lacuna" id="lac_${p.id}">`+ops.map(o=>`<button data-id="${p.id}" data-v="${esc(o)}">${esc(o)}</button>`).join('')+'</span>'; }).join('')+'</div>'; }).join('');
+  c.appendChild(d); });
+ c.querySelectorAll('.lacuna button').forEach(b=>b.onclick=()=>encaixar(b));
+ atualizarMapa();
+}
+function encaixar(btn){
+ const id=btn.dataset.id, p=PECAS.find(x=>x.id===id); const st=S.mapa.pecas[id]||(S.mapa.pecas[id]={tent:0});
+ if(st.feita) return; st.tent++;
+ if(btn.dataset.v===p.certa){ st.feita=true; st.primeira = st.tent===1; salvar('mapa'); atualizarMapa();
+  if(pecasFeitas()===PECAS.length && !S.mapa.concluido){ concluir('mapa'); document.getElementById('mapaFim').scrollIntoView({behavior:'smooth'}); }
+ } else { btn.classList.remove('erro'); void btn.offsetWidth; btn.classList.add('erro'); salvar('mapa'); }
+}
+function atualizarMapa(){
+ PECAS.forEach(p=>{ const st=S.mapa.pecas[p.id]; if(st&&st.feita){ const l=document.getElementById('lac_'+p.id); if(l&&!l.classList.contains('feita')){ l.classList.add('feita'); l.innerHTML=`<span>${esc(p.certa)}</span>`; } } });
+ const n=pecasFeitas(), tot=PECAS.length;
+ document.getElementById('contadorMapa').textContent = n===tot ? '🧠 Mapa completo!' : `🧩 Mapa: ${n} de ${tot} peças encaixadas`;
+ const m=document.getElementById('mapa'); m.classList.toggle('incompleto', n<tot); m.classList.toggle('completo', n===tot);
+ document.getElementById('mapaFim').style.display = n===tot ? '' : 'none';
+}
+
+// ---------- VERDADEIRO OU FALSO ----------
+let rodada=null;
+function vfInicio(){
+ const melhor=S.vf.melhor; const el=document.getElementById('vfJogo');
+ el.innerHTML=`<h2>🚦 Sinal Verde ou Vermelho</h2><p>O trem só anda com o sinal certo! Leia a frase: se ela for <b>verdadeira</b>, dê <b>🟢 sinal verde</b>; se for <b>falsa</b>, dê <b>🔴 sinal vermelho</b>. São <b>12 frases</b> por rodada, sorteadas de um banco de ${VF.length}.</p>${melhor?`<p class="sub">🏅 Seu melhor placar: ${melhor.acertos} de 12 (${melhor.pct}%)</p>`:''}<div style="text-align:center"><button class="btn amarelo" id="vfComecar">🚂 Começar rodada</button></div>`;
+ document.getElementById('vfComecar').onclick=vfNova;
+}
+function vfNova(){ const idx=embaralhar(VF.map((v,i)=>i), Math.floor(Math.random()*1e9)).slice(0,12); rodada={idx, i:0, acertos:0, resp:[]}; vfMostrar(); }
+function vfMostrar(){
+ const el=document.getElementById('vfJogo'); const r=rodada, v=VF[r.idx[r.i]];
+ el.innerHTML=`<h2>🚦 Sinal Verde ou Vermelho</h2><div class="barra"><div style="width:${100*r.i/12}%"></div></div><p class="sub">Frase ${r.i+1} de 12 · ⭐ ${r.acertos} acertos</p><div class="sinal">🚦</div><div class="vf-frase">${esc(v.f)}</div><div class="vf-bts"><button class="btn" id="vfV">🟢 Verdadeiro</button><button class="btn loco" id="vfF">🔴 Falso</button></div><div id="vfFb"></div>`;
+ document.getElementById('vfV').onclick=()=>vfResp(1); document.getElementById('vfF').onclick=()=>vfResp(0);
+}
+function vfResp(x){
+ const r=rodada, v=VF[r.idx[r.i]]; const ok = x===v.v; if(ok) r.acertos++; r.resp.push({f:r.idx[r.i], ok});
+ document.getElementById('vfV').disabled=true; document.getElementById('vfF').disabled=true;
+ document.getElementById('vfFb').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✅ Acertou!':'💛 Não foi dessa vez.'} ${esc(v.e)} ${v.a?`<button class="som" data-fala="${esc(v.a)}">🔊</button>`:''}</div><div style="text-align:center;margin-top:10px"><button class="btn azul" id="vfProx">${r.i<11?'Próxima frase ➡️':'Ver resultado 🏆'}</button></div>`;
+ document.getElementById('vfProx').onclick=()=>{ r.i++; if(r.i<12) vfMostrar(); else vfFim(); };
+}
+function vfFim(){
+ const r=rodada, pct=Math.round(100*r.acertos/12); const est = r.acertos>=11?'⭐⭐⭐':r.acertos>=8?'⭐⭐':'⭐';
+ S.vf.rodadas=(S.vf.rodadas||0)+1; if(!S.vf.melhor || r.acertos>S.vf.melhor.acertos) S.vf.melhor={acertos:r.acertos,pct,quando:new Date().toISOString()};
+ S.vf.ultima={acertos:r.acertos,pct}; salvar('vf'); if(!S.vf.concluido) concluir('vf');
+ document.getElementById('vfJogo').innerHTML=`<div class="placar-final"><div class="trofeu">🏆</div><h2>Fim da rodada!</h2><p>${est}</p><p><b>${r.acertos} de 12</b> · ${pct}% de acerto</p><p class="sub">🏅 Melhor placar: ${S.vf.melhor.acertos} de 12 (${S.vf.melhor.pct}%)</p><button class="btn amarelo" id="vfDeNovo">🔁 Jogar de novo</button><button class="btn loco" id="vfResumo">🗺️ Agora revise no Resumo!</button></div>`;
+ document.getElementById('vfDeNovo').onclick=vfNova; document.getElementById('vfResumo').onclick=()=>irPara('resumo');
+}
+
+// ---------- RESUMO ----------
+function montarResumo(){
+ document.getElementById('linhaTempo').innerHTML = SEMANA.map(s=>`<div class="parada"><span class="ic">${s.ic}</span><span class="dia">${s.d} <button class="som" data-fala="${s.d}">🔊</button></span><span>He ${s.en} <span class="sub">(${s.pt}: ${s.a})</span></span></div>`).join('');
+ document.getElementById('gradeVocab').innerHTML = VOCAB.map(v=>W(v[0],v[1],v[2])).join('');
+ document.getElementById('relampago').innerHTML = RELAMPAGO.map((r,i)=>`<button class="op" data-i="${i}">⚡ ${esc(r[0])}</button><div class="resp-oculta" id="rl_${i}">👉 ${esc(r[1])}</div>`).join('');
+ document.querySelectorAll('#relampago .op').forEach(b=>b.onclick=()=>{ const d=document.getElementById('rl_'+b.dataset.i); d.style.display = d.style.display==='block'?'none':'block'; });
+ const bt=document.getElementById('btLiResumo');
+ bt.onclick=()=>{ concluir('resumo'); bt.disabled=true; bt.textContent='✅ Resumo lido!'; document.getElementById('txtLiResumo').textContent='Muito bem! O Simulado foi destravado.'; };
+ if(S.resumo.concluido){ bt.disabled=true; bt.textContent='✅ Resumo lido!'; document.getElementById('txtLiResumo').textContent='Você já leu o resumo. O Simulado está aberto.'; }
+ window.addEventListener('scroll', checarRolagem, {passive:true});
+}
+function checarRolagem(){
+ if(abaAtual!=='resumo') return;
+ const sec=document.getElementById('sec-resumo'); const top=sec.getBoundingClientRect().top+window.scrollY; const alt=sec.offsetHeight;
+ const vis = window.scrollY + window.innerHeight - top; const pct=Math.max(0,Math.min(100,Math.round(100*vis/alt)));
+ if(pct>(S.resumo.maxRolagem||0)){ S.resumo.maxRolagem=pct; gravarChave(K.resumo,S.resumo); }
+ if(pct>=90 && !S.resumo.concluido){ const bt=document.getElementById('btLiResumo'); bt.disabled=false; document.getElementById('txtLiResumo').textContent='Pode clicar! 👆'; }
+}
+
+// ---------- SIMULADO ----------
+function montarSim(){
+ S.simulado.resp = S.simulado.resp || {};
+ const c=document.getElementById('questoesSim'); c.innerHTML='';
+ SIM.forEach((q,qi)=>{ const d=document.createElement('div'); d.className='card'; d.id='sq_'+qi;
+  if(q.tipo==='tiles'){
+   d.innerHTML=`<b>${qi+1}) ${q.q}</b><div style="font-size:1.4em;letter-spacing:6px;margin:6px 0;font-weight:bold">${q.letras.split('').join(' ')}</div><div class="tiles">`+q.letras.split('').map((l,li)=>`<button class="tile" data-li="${li}">${l}</button>`).join('')+`</div><div class="montado" id="mt_${qi}"></div><button class="btn claro" id="ap_${qi}">↩️ Apagar</button>`;
+  } else {
+   const ordem=embaralhar(q.o.map((o,oi)=>oi), semente('sim'+qi));
+   d.innerHTML=`<b>${qi+1}) ${q.q}</b><div class="opcoes" style="margin-top:8px">`+ordem.map((oi,pos)=>`<button class="op" data-oi="${oi}">${LETRAS[pos]}) ${esc(q.o[oi].t)}</button>`).join('')+'</div>';
+  }
+  c.appendChild(d);
+  if(q.tipo==='tiles'){
+   d.querySelectorAll('.tile').forEach(t=>t.onclick=()=>{ if(S.simulado.enviado) return; const r=S.simulado.resp[qi]||{usadas:[]}; r.usadas=r.usadas||[]; r.usadas.push(+t.dataset.li); r.v=r.usadas.map(i=>q.letras[i]).join(''); S.simulado.resp[qi]=r; salvar('simulado'); atualizarSim(); });
+   d.querySelector('#ap_'+qi).onclick=()=>{ if(S.simulado.enviado) return; delete S.simulado.resp[qi]; salvar('simulado'); atualizarSim(); };
+  } else {
+   d.querySelectorAll('.op').forEach(b=>b.onclick=()=>{ if(S.simulado.enviado) return; S.simulado.resp[qi]={v:+b.dataset.oi}; salvar('simulado'); atualizarSim(); });
+  }
+ });
+ document.getElementById('btEnviarSim').onclick=enviarSim;
+ atualizarSim();
+}
+function simRespondida(qi){ const q=SIM[qi], r=S.simulado.resp[qi]; if(!r) return false; return q.tipo==='tiles' ? (r.v||'').length===q.resp.length : r.v!==undefined; }
+function simCerta(qi){ const q=SIM[qi], r=S.simulado.resp[qi]; if(!r) return false; return q.tipo==='tiles' ? r.v===q.resp : !!q.o[r.v].ok; }
+function atualizarSim(){
+ SIM.forEach((q,qi)=>{ const d=document.getElementById('sq_'+qi), r=S.simulado.resp[qi];
+  if(q.tipo==='tiles'){ const us=(r&&r.usadas)||[]; d.querySelectorAll('.tile').forEach(t=>t.disabled = us.includes(+t.dataset.li) || !!S.simulado.enviado); document.getElementById('mt_'+qi).textContent=(r&&r.v)||''; }
+  else d.querySelectorAll('.op').forEach(b=>{ b.classList.toggle('sel', !!r && r.v===+b.dataset.oi); b.disabled=!!S.simulado.enviado; });
+ });
+ const n=SIM.filter((q,i)=>simRespondida(i)).length;
+ document.getElementById('barraSim').style.width=(100*n/SIM.length)+'%';
+ document.getElementById('txtSim').textContent = S.simulado.enviado ? `Simulado enviado · nota ${S.simulado.acertos} de ${SIM.length}` : `Respondidas: ${n} de ${SIM.length}`;
+ document.getElementById('envioSim').style.display = S.simulado.enviado ? 'none' : '';
+ if(S.simulado.enviado) mostrarResultado();
+}
+function gerarCodigo(pref, n){ const L='ABCDEFGHJKLMNPQRSTUVWXYZ'; return pref+'-'+String(n).padStart(2,'0')+'-'+L[Math.floor(Math.random()*L.length)]+L[Math.floor(Math.random()*L.length)]; }
+function enviarSim(){
+ const faltam=SIM.filter((q,i)=>!simRespondida(i)).length;
+ if(faltam){ modal(`<h3>Ainda faltam ${faltam} questões</h3><p>Responda todas antes de enviar. As que faltam estão sem nada marcado (ou com a palavra incompleta).</p>`); return; }
+ modal('<h3>Enviar o Simulado?</h3><p>Depois de enviar, não dá para mudar as respostas.</p>',[{t:'📨 Enviar',c:'loco',f:()=>{
+  const ac=SIM.filter((q,i)=>simCerta(i)).length; S.simulado.enviado=true; S.simulado.acertos=ac; if(!S.simulado.codigo) S.simulado.codigo=gerarCodigo('SIM',ac); S.simulado.enviadoEm=new Date().toISOString();
+  concluir('simulado'); atualizarSim(); document.getElementById('resultadoSim').scrollIntoView({behavior:'smooth'}); }},{t:'Voltar',c:'claro'}]);
+}
+function mostrarResultado(){
+ const ac=S.simulado.acertos, pct=Math.round(100*ac/SIM.length);
+ let h=`<div class="card placar-final"><div class="trofeu">${pct>=80?'🏆':pct>=60?'🥈':'🚂'}</div><h2>Fim da Grande Viagem!</h2><p><b>${ac} de ${SIM.length}</b> · ${pct}%</p><p>Seu código: <b style="font-size:1.2em">${S.simulado.codigo}</b></p><p class="sub">Mostre o código para a mãe ou o pai. Ele abre o Relatório na aba Início.</p></div><div class="card"><h2>✅ Gabarito comentado</h2>`;
+ SIM.forEach((q,qi)=>{ const r=S.simulado.resp[qi], ok=simCerta(qi);
+  h+=`<div class="gab-q"><b>${qi+1}) ${q.q}</b> ${ok?'<span class="tag ok">acertou</span>':'<span class="tag lock">errou</span>'} <button class="som" data-fala="${esc(q.fala)}">🔊</button>`;
+  if(q.tipo==='tiles') h+=`<div class="gab-op ${ok?'certa':'cinza'} marcada">Você montou: <b>${esc(r.v)}</b></div><div class="gab-op certa">✔️ Certo: <b>${q.resp}</b> — ${esc(q.exp)}</div>`;
+  else { const ordem=embaralhar(q.o.map((o,oi)=>oi), semente('sim'+qi)); h+=ordem.map((oi,pos)=>{ const o=q.o[oi]; return `<div class="gab-op ${o.ok?'certa':'cinza'} ${r.v===oi?'marcada':''}">${LETRAS[pos]}) <b>${esc(o.t)}</b> ${o.ok?'✔️':''} — ${esc(o.w)}${r.v===oi?' <i>(sua resposta)</i>':''}</div>`; }).join(''); }
+  h+='</div>'; });
+ h+='</div>';
+ document.getElementById('resultadoSim').innerHTML=h;
+}
+
+// ---------- RELATÓRIO ----------
+function dt(s){ return s?new Date(s).toLocaleString('pt-BR'):'—'; }
+function abrirRelatorio(){
+ const cod=document.getElementById('codPais').value.trim().toUpperCase();
+ const ok = cod==='PAIS-77' || (S.simulado.codigo && cod===S.simulado.codigo);
+ const area=document.getElementById('areaPais');
+ if(!ok){ area.innerHTML='<p class="fb no">Código não reconhecido. Confira e tente de novo.</p>'; return; }
+ const acL=Object.values(S.leitura.resp||{}).filter(r=>r.ok).length;
+ const errL=[]; BLOCOS.forEach(b=>b.qs.forEach((q,qi)=>{ const r=(S.leitura.resp||{})[b.id+'_'+qi]; if(r&&!r.ok) errL.push(b.titulo.split(' · ')[0]+': '+q.q.replace(/<[^>]+>/g,'')); }));
+ const prim=PECAS.filter(p=>S.mapa.pecas&&S.mapa.pecas[p.id]&&S.mapa.pecas[p.id].primeira).length;
+ const errS=SIM.map((q,i)=>i).filter(i=>S.simulado.enviado&&!simCerta(i)).map(i=>i+1);
+ let h=`<table class="rel"><tr><th>Material</th><th>Desempenho</th></tr>
+ <tr><td>📖 Estações</td><td>${respondidasLeit()} de ${TOTAL_LEIT} respondidas · ${acL} acertos${errL.length?'<br><span class="sub">Errou: '+errL.map(esc).join(' · ')+'</span>':''}</td></tr>
+ <tr><td>🧠 Mapa</td><td>${pecasFeitas()} de ${PECAS.length} peças · Mapa Mental: ${prim} de ${PECAS.length} peças encaixadas de primeira</td></tr>
+ <tr><td>🚦 V ou F</td><td>${S.vf.melhor?`melhor placar ${S.vf.melhor.acertos} de 12 (${S.vf.melhor.pct}%) · ${S.vf.rodadas} rodada(s)`:'ainda não jogou'}</td></tr>
+ <tr><td>🗺️ Resumo</td><td>rolagem máxima ${S.resumo.maxRolagem||0}% · ${S.resumo.concluido?'marcou "li até o fim"':'não marcou'}</td></tr>
+ <tr><td>📝 Simulado</td><td>${S.simulado.enviado?`${S.simulado.acertos} de ${SIM.length} · código ${S.simulado.codigo}${errS.length?'<br><span class="sub">Errou as questões: '+errS.join(', ')+'</span>':''}`:'não enviado'}</td></tr>
+ <tr><td>🛤️ Trilha</td><td>`+ETAPAS.map(e=>`${e.ic} ${S[e.id].concluido?'✅ '+dt(S[e.id].concluidoEm):'⬜ não concluído'}`).join('<br>')+(liberadoPais()?`<br>🔓 Liberada pelos pais em ${dt(S.trilha.liberadoEm)}`:'')+`</td></tr></table>`;
+ h+= liberadoPais() ? '<p><span class="tag novo">🔓 Trilha liberada pelos pais</span> <button class="btn claro" id="btTrancar">🔒 Trancar de novo</button></p>' : (cod==='PAIS-77'?'<p><button class="btn amarelo" id="btLiberar">🔓 Liberar todos os materiais</button></p>':'');
+ area.innerHTML=h;
+ const lb=document.getElementById('btLiberar'); if(lb) lb.onclick=()=>{ S.trilha.liberadoPelosPais=true; S.trilha.liberadoEm=new Date().toISOString(); salvar('trilha'); montarAbas(); montarTrilha(); abrirRelatorio(); };
+ const tb=document.getElementById('btTrancar'); if(tb) tb.onclick=()=>{ S.trilha.liberadoPelosPais=false; salvar('trilha'); montarAbas(); montarTrilha(); abrirRelatorio(); };
+}
+document.getElementById('btRelatorio').onclick=abrirRelatorio;
+
+// ---------- exportar / importar / zerar ----------
+document.getElementById('btExportar').onclick=()=>{
+ const dados={kit:SLUG, titulo:'Expresso Piuí — Revisão Inglês 3º ano Units 7 e 8', exportadoEm:new Date().toISOString(), chaves:{}}; for(const n in K) dados.chaves[K[n]]=S[n];
+ const blob=new Blob([JSON.stringify(dados,null,1)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='progresso_expresso_piui.json'; document.body.appendChild(a); a.click(); a.remove();
+};
+document.getElementById('btImportar').onclick=()=>document.getElementById('arqImportar').click();
+document.getElementById('arqImportar').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ try{ const d=JSON.parse(rd.result); if(d.kit!==SLUG) throw 0; for(const n in K){ if(d.chaves[K[n]]) gravarChave(K[n], d.chaves[K[n]]); } modal('<h3>Progresso importado! ✅</h3>',[{t:'OK',f:()=>location.reload()}]); }catch(x){ modal('<h3>Arquivo não reconhecido</h3><p>Use o arquivo exportado deste mesmo material.</p>'); } }; rd.readAsText(f); };
+document.getElementById('btZerar').onclick=()=>modal('<h3>Zerar tudo?</h3><p>Isso apaga o progresso deste material neste aparelho e tranca a trilha de novo.</p>',[{t:'🗑️ Zerar',c:'loco',f:()=>{ for(const n in K) apagarChave(K[n]); location.reload(); }},{t:'Cancelar',c:'claro'}]);
+
+// ---------- início ----------
+carregar(); montarComo(); montarLeitura(); montarMapa(); vfInicio(); montarResumo(); montarSim(); montarAbas(); montarTrilha(); painel(); irPara('inicio');
+</script>
+</body>
+</html>
